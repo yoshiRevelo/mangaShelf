@@ -1,0 +1,67 @@
+# ============================================================
+# Xcode / Swift — MisMangas
+# ============================================================
+
+## Archivos de sistema macOS
+.DS_Store
+
+## Build
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+## Datos de usuario de Xcode (rompen colaboración: cada uno tiene los suyos)
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+
+## Workspace generado automáticamente dentro de .xcodeproj
+# (el .xcworkspace del propio .xcodeproj se genera solo; NO ignores un
+# .xcworkspace de nivel superior si lo creas tú a mano para varios proyectos)
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+
+## Swift Package Manager
+.build/
+.swiftpm/
+# Package.resolved SÍ se versiona en una app (fija las versiones exactas de
+# las dependencias para todo el equipo) — solo se ignora en librerías.
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+## Simulador / pruebas
+*.gcno
+*.gcda
+*.xcresult/
+
+## Fastlane (si lo usáis más adelante para builds/entrega)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+## Secretos — App-Token de /users, futuras API keys, etc.
+# Cread Core/Config/Secrets.xcconfig con el valor real y referenciadlo desde
+# Info.plist como $(APP_TOKEN); esa ruta queda IGNORADA. Versionad en su
+# lugar Secrets.xcconfig.example con la clave vacía como plantilla.
+Core/Config/Secrets.xcconfig
+*.xcconfig
+!Core/Config/Secrets.xcconfig.example
+
+## SwiftData / stores locales que a veces se generan dentro del proyecto
+# durante pruebas en Simulador (no debería pasar si usáis el contenedor por
+# defecto de la app, pero por si acaso):
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
