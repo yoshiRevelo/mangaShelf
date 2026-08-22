@@ -11,3 +11,5 @@ nonisolated struct PaginatedResponse<Item: Decodable & Sendable>: Decodable, Sen
     let metadata: Metadata
     let items: [Item]
 }
+
+

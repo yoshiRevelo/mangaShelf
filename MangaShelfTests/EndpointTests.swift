@@ -45,6 +45,15 @@ struct EndpointTests {
         #expect(request.value(forHTTPHeaderField: "Content-Type") == "application/json")
         #expect(request.httpMethod == "POST")
     }
+    
+    @Test func fetchByGenreWithSpace() async throws {
+        let network = URLSessionNetworkClient()
+        let repository = MangaRepositoryImpl(network: network)
+        
+        let query = MangaListQuery(page: 1, per: 1, mode: .genre("Award Winning"))
+        let manga = try await repository.fetchMangas(query: query)
+        #expect(manga.items.count == 1)
+    }
 }
 
 // MARK: - URLProtocol falso, intercepta cualquier petición, red real cero.
