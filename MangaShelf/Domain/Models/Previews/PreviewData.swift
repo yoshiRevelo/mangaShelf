@@ -100,7 +100,84 @@ nonisolated extension Manga {
         demographics: [.seinen]
     )
 
-    static let previewList: [Manga] = [.monster, .berserk]
+    static let twentiethCenturyBoys = Manga(
+        id: 3,
+        title: "20th Century Boys",
+        titleEnglish: "20th Century Boys",
+        titleJapanese: "20世紀少年",
+        synopsis: """
+        As the 20th century approaches its end, people all over the world are anxious that the world is changing. And probably not for the better.
+
+        Kenji Endo is a normal convenience store manager who's just trying to get by. But when he learns that one of his old friends going by the name "Donkey" has suddenly committed suicide, and that a new cult led by a figure known as "Friend" is becoming more notorious, Kenji starts to feel that something isn't right. With a few key clues left behind by his deceased friend, Kenji realizes that this cult is much more than he ever thought it would be—not only is this mysterious organization directly targeting him and his childhood friends, but the whole world also faces a grave danger that only the friends have the key to stop.
+
+        Kenji's simple life of barely making ends meet is flipped upside down when he reunites with his childhood friends, and together they must figure out the truth of how their past is connected to the cult, as the turn of the century could mean the possible end of the world.
+
+        [Written by MAL Rewrite]
+        """,
+        background: "20th Century Boys won the Kodansha Manga Award in the general category in 2001, an Excellence Prize at the Japan Media Arts Festival in 2002, and the Shogakukan Manga Award in the general category in 2003. The series' combined storyline won the Grand Prize at the 37th Japan Cartoonist Awards on May 9, 2008. VIZ Media published the series in English under the VIZ Signature imprint from February 17, 2009 to September 18, 2012. VIZ Media licensed the series in 2005; however, at Urasawa's request, it was rescheduled for release after Monster finished its English publication due to a change in art style over time. The series has also been published in Brazilian Portuguese by Panini Comics/Planet Manga since September 2012. The series was adapted into a trilogy of live-action films which released in Japan between August 30, 2008 and August 29, 2009.",
+        status: "finished",
+        score: 8.95,
+        chapters: 249,
+        volumes: 22,
+        startDate: isoDate("1999-09-27T00:00:00Z"),
+        endDate: isoDate("2006-04-24T00:00:00Z"),
+        mainPicture: URL(string: "https://cdn.myanimelist.net/images/manga/5/260006l.jpg"),
+        url: URL(string: "https://myanimelist.net/manga/3/20th_Century_Boys"),
+        authors: [
+            Author(id: UUID(uuidString: "54BE174C-2FE9-42C8-A842-85D291A6AEDD")!, firstName: "Naoki", lastName: "Urasawa", role: "Story & Art")
+        ],
+        genres: [
+            Genre(id: UUID(uuidString: "4C13067F-96FF-4F14-A1C0-B33215F24E0B")!, genre: "Award Winning"),
+            Genre(id: UUID(uuidString: "4312867C-1359-494A-AC46-BADFD2E1D4CD")!, genre: "Drama"),
+            Genre(id: UUID(uuidString: "97C8609D-856C-419E-A4ED-E13A5C292663")!, genre: "Mystery"),
+            Genre(id: UUID(uuidString: "2DEDC015-82DA-4EF4-B983-F0F58C8F689E")!, genre: "Sci-Fi")
+        ],
+        themes: [
+            Theme(id: UUID(uuidString: "4394C99F-615B-494A-929E-356A342A95B8")!, theme: "Psychological"),
+            Theme(id: UUID(uuidString: "3CF0EDA7-5856-40F7-A0CF-EC676B4A842C")!, theme: "Historical")
+        ],
+        demographics: [.seinen]
+    )
+
+    static let yokohamaKaidashiKikou = Manga(
+        id: 4,
+        title: "Yokohama Kaidashi Kikou",
+        titleEnglish: "Yokohama Kaidashi Kikou",
+        titleJapanese: "ヨコハマ買い出し紀行",
+        synopsis: """
+        In a post-apocalyptic world where an environmental disaster led to the eruption of Mt. Fuji and the inundation of Yokohama, the age of humans is in its twilight. Alpha Hatsuseno is an android and the namesake of a small cafe outside Yokohama. As her owner is away on a trip indefinitely, she has been left responsible for running the cafe. Although she rarely gets any customers, Alpha remains outgoing and cheerful.
+
+        While Alpha awaits her owner's homecoming, she explores the vicinity with her scooter and camera. Throughout her journeys, she meets new people and other androids, making memories along the way.
+
+        Yokohama Kaidashi Kikou is a beautiful, laid-back story centered around Alpha's daily activities, emphasizing the passing of time in everyday life.
+
+        [Written by MAL Rewrite]
+        """,
+        background: "Three drama CDs were released in 2002. In all three, Alpha is voiced by Hekiru Shiina and Kokone by Akiko Nakagawa. Both of whom voiced the same characters in the two OVA series. A novel based on Yokohama Kaidashi Kikou called Yokohama Kaidashi Kikou Novel: Seeing, Walking, Being Glad, written by Teriha Katsuki, was published by Kodansha on 23 October 2008. Set long after the conclusion of the manga series, it tells the story of a boy robot named Omega and his search for the legendary Cafe Alpha. (Source: Wikipedia) In 2007, the series won the Seiun Award for Best Manga. Yokohama Kaidashi Kikou has been published in English by Seven Seas Entertainment as omnibus volumes since August 9, 2022.",
+        status: "finished",
+        score: 8.68,
+        chapters: 142,
+        volumes: 14,
+        startDate: isoDate("1994-04-25T00:00:00Z"),
+        endDate: isoDate("2006-02-25T00:00:00Z"),
+        mainPicture: URL(string: "https://cdn.myanimelist.net/images/manga/1/171813l.jpg"),
+        url: URL(string: "https://myanimelist.net/manga/4/Yokohama_Kaidashi_Kikou"),
+        authors: [
+            Author(id: UUID(uuidString: "EC4982FD-4793-4A1A-B956-D2E57895BB57")!, firstName: "Hitoshi", lastName: "Ashinano", role: "Story & Art")
+        ],
+        genres: [
+            Genre(id: UUID(uuidString: "4C13067F-96FF-4F14-A1C0-B33215F24E0B")!, genre: "Award Winning"),
+            Genre(id: UUID(uuidString: "4312867C-1359-494A-AC46-BADFD2E1D4CD")!, genre: "Drama"),
+            Genre(id: UUID(uuidString: "536445E3-CEF5-49F7-B22B-6CD9807F0744")!, genre: "Slice of Life"),
+            Genre(id: UUID(uuidString: "2DEDC015-82DA-4EF4-B983-F0F58C8F689E")!, genre: "Sci-Fi")
+        ],
+        themes: [
+            Theme(id: UUID(uuidString: "263559F4-574F-4BA8-8840-2AEB445CD6BD")!, theme: "Iyashikei")
+        ],
+        demographics: [.seinen]
+    )
+
+    static let previewList: [Manga] = [.monster, .berserk, .twentiethCenturyBoys, .yokohamaKaidashiKikou]
 }
 
 nonisolated extension PaginatedResponse where Item == Manga {

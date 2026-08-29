@@ -43,7 +43,7 @@ final class MangasListViewModel {
     private(set) var listState: ListState<[Manga]> = .idle
     private(set) var mode: MangaBrowseMode = .all
     
-    private let per = 15
+    private let per = 14
     
     private var hasMorePages: Bool {
         guard let metadata else { return true}
@@ -64,7 +64,7 @@ final class MangasListViewModel {
         self.repository = repository
     }
     
-    func getMangas() async {
+    func loadMangas() async {
         guard !listState.isLoading else { return }
         if metadata != nil, !hasMorePages { return }
         
@@ -78,7 +78,6 @@ final class MangasListViewModel {
             let result = try await repository.fetchMangas(query: query)
             metadata =  result.metadata
             listState = .loaded(previousMangas + result.items)
-            
         } catch let error as APIError {
             listState = .error(error.errorDescription ?? "Undefined error")
         } catch {

@@ -1,0 +1,94 @@
+//
+//  MangasListScreen.swift
+//  MangaShelf
+//
+//  Created by Josimar Revelo on 29/08/26.
+//
+
+import SwiftUI
+
+struct MangasListScreen: View {
+    
+    @Environment(AppEnvironment.self) private var environment
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    
+    @State private var viewModel: MangasListViewModel?
+    
+    
+    var body: some View {
+        Group {
+            if let viewModel {
+                switch viewModel.listState {
+                case .idle, .loading:
+                    ProgressView()
+                case .loaded, .loadMore:
+                    content(viewModel)
+                        .padding()
+                case .error(let message):
+                    emptyState(viewModel, message: message)
+                }
+            } else {
+                ProgressView()
+            }
+        }
+        .task {
+            if viewModel == nil {
+                viewModel = MangasListViewModel(repository: environment.mangaRepository)
+            }
+            await viewModel?.loadMangas()
+        }
+    }
+    
+    @ViewBuilder
+    private func content(_ viewModel: MangasListViewModel) -> some View {
+        let list = viewModel.mangas
+        
+        var columns: [GridItem] {
+            let minimum: CGFloat = horizontalSizeClass == .compact ? 120 : 190
+            let maximum: CGFloat = horizontalSizeClass == .compact ? 170 : 270
+            return [GridItem(.adaptive(minimum: minimum, maximum: maximum), spacing: 12)]
+        }
+        
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 12) {
+                ForEach(list) { manga in
+                    MangaCoverCard(manga: manga)
+                        .onAppear {
+                            if manga.id == list.last?.id {
+                                Task { await viewModel.loadMangas() }
+                            }
+                        }
+                }
+            }
+            
+            if viewModel.listState.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func emptyState(_ viewModel: MangasListViewModel, message: String) -> some View {
+        ContentUnavailableView {
+            Label("No mangas available", systemImage: "apple.books.pages")
+        } description: {
+            Text(message)
+        } actions: {
+            Button("Try again") {
+                Task { await viewModel.loadMangas() }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+}
+
+#Preview("With data") {
+    MangasListScreen()
+        .environment(AppEnvironment.preview())
+}
+
+#Preview("Error") {
+    MangasListScreen()
+        .environment(AppEnvironment.failPreview())
+}

@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct MangaShelfApp: App {
+    @State private var environment = AppEnvironment.live()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MangasListScreen()
+                .environment(environment)
+            
         }
     }
 }

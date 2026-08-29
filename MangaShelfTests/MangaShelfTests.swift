@@ -13,14 +13,14 @@ struct MangaShelfTests {
 
     @Test func fetchMangas() async {
         let viewModel = await MangasListViewModel(repository: MockMangaRepository())
-        await viewModel.getMangas()
+        await viewModel.loadMangas()
         #expect(await viewModel.mangas.count == 2)
     }
     
     @Test func stopFetchAtSecondCall() async {
         let viewModel = await MangasListViewModel(repository: MockMangaRepository(delay: .milliseconds(100)))
-        async let first = await viewModel.getMangas()
-        async let second = await viewModel.getMangas()
+        async let first = await viewModel.loadMangas()
+        async let second = await viewModel.loadMangas()
         
         _ = await (first, second)
         
@@ -29,7 +29,7 @@ struct MangaShelfTests {
 
     @Test func errorState() async {
         let viewModel = await MangasListViewModel(repository: MockMangaRepository(shouldFail: true))
-        await viewModel.getMangas()
+        await viewModel.loadMangas()
         
         guard case .error = await viewModel.listState else {
             Issue.record("Must be an error, we got \(await viewModel.listState)")
