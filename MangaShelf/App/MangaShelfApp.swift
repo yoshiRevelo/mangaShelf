@@ -9,13 +9,15 @@ import SwiftUI
 
 @main
 struct MangaShelfApp: App {
+    @State private var router = AppRouter()
     @State private var environment = AppEnvironment.live()
     
     var body: some Scene {
         WindowGroup {
-            MangasListScreen()
+            MainTabView()
+                .transition(.opacity)
                 .environment(environment)
-            
+                .environment(router)
         }
     }
 }

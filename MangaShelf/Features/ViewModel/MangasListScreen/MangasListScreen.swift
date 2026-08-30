@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MangasListScreen: View {
-    
     @Environment(AppEnvironment.self) private var environment
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
