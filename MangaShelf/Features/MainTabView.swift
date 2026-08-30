@@ -15,7 +15,16 @@ struct MainTabView: View {
         
         TabView(selection: $router.selectedTab) {
             Tab(AppTab.list.title, systemImage: AppTab.list.symbol, value: AppTab.list) {
-                MangasListScreen()
+                NavigationStack(path: $router.listPath) {
+                    MangasListScreen()
+                        .navigationDestination(for: MangaRoute.self) { route in
+                            switch route {
+                            case .detail(let manga):
+                                MangaDetailScreen(manga: manga)
+                            }
+                        }
+                }
+                
             }
             
             Tab(AppTab.collection.title, systemImage: AppTab.collection.symbol, value: AppTab.collection) {

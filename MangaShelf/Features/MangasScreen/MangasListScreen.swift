@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MangasListScreen: View {
+    @Environment(AppRouter.self) private var router
     @Environment(AppEnvironment.self) private var environment
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
@@ -30,6 +31,7 @@ struct MangasListScreen: View {
                 ProgressView()
             }
         }
+        .navigationTitle(AppTab.list.title)
         .task {
             if viewModel == nil {
                 viewModel = MangasListViewModel(repository: environment.mangaRepository)
@@ -51,7 +53,7 @@ struct MangasListScreen: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(list) { manga in
-                    MangaCoverCard(manga: manga)
+                    MangaCoverCard(manga: manga, onTap: { router.openDetailFromList(manga) })
                         .onAppear {
                             if manga.id == list.last?.id {
                                 Task { await viewModel.loadMangas() }
@@ -90,4 +92,5 @@ struct MangasListScreen: View {
 #Preview("Error") {
     MangasListScreen()
         .environment(AppEnvironment.failPreview())
+        .environment(AppRouter())
 }

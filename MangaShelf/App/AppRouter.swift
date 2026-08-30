@@ -12,6 +12,15 @@ final class AppRouter {
     var selectedTab: AppTab = .list
     
     var listPath: [MangaRoute] = []
+    
+    func openDetailFromList(_ manga: Manga) {
+        selectedTab = .list
+        
+        if listPath.last != .detail(manga) {
+            listPath.append(.detail(manga))
+        }
+    }
+    
 }
 
 nonisolated enum AppTab: String, CaseIterable, Identifiable {

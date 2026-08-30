@@ -11,8 +11,10 @@ struct MangaCoverCard: View {
     let manga: Manga
     var readingProgress: Double? = nil
     var isComplete = false
+    let onTap: () -> Void
     
     var body: some View {
+        Button(action: onTap) {
             ZStack {
                 Color.clear
                     .aspectRatio(3/4, contentMode: .fit)
@@ -82,10 +84,12 @@ struct MangaCoverCard: View {
             .clipShape(
                 RoundedRectangle(cornerRadius: 8)
             )
+        }
+        .buttonStyle(PressableCardStyle())
     }
 }
 
 #Preview {
-    MangaCoverCard(manga: .berserk, readingProgress: 0.6)
+    MangaCoverCard(manga: .berserk, readingProgress: 0.6, onTap: { })
         .frame(width: 200)
 }
