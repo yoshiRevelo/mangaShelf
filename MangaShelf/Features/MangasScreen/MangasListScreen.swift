@@ -87,6 +87,7 @@ struct MangasListScreen: View {
 #Preview("With data") {
     MangasListScreen()
         .environment(AppEnvironment.preview())
+        .environment(AppRouter())
 }
 
 #Preview("Error") {

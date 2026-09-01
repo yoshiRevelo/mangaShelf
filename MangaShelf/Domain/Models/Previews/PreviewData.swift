@@ -31,7 +31,7 @@ nonisolated extension Manga {
         [Written by MAL Rewrite]
         """,
         background: "Monster won the Grand Prize at the 3rd annual Tezuka Osamu Cultural Prize in 1999, as well as the 46th Shogakukan Manga Award in the General category in 2000. The series was published in English by VIZ Media under the VIZ Signature imprint from February 21, 2006 to December 16, 2008, and again in 2-in-1 omnibuses (subtitled The Perfect Edition) from July 15, 2014 to July 19, 2016. The manga was also published in Brazilian Portuguese by Panini Comics/Planet Manga from June 2012 to April 2015, in Polish by Hanami from March 2014 to February 2017, in Spain by Planeta Cómic from June 16, 2009 to September 21, 2010, and in Argentina by LARP Editores.",
-        status: "finished",
+        status: .finished,
         score: 9.15,
         chapters: 162,
         volumes: 18,
@@ -70,7 +70,7 @@ nonisolated extension Manga {
         Volume 14: Berserk: The Prototype
         """,
         background: "Berserk won the Award for Excellence at the sixth installment of Tezuka Osamu Cultural Prize in 2002. The series has over 50 million copies in print worldwide and has been published in English by Dark Horse since November 4, 2003. It is also published in Italy, Germany, Spain, France, Brazil, South Korea, Hong Kong, Taiwan, Thailand, Poland, México and Turkey. In May 2021, the author Kentaro Miura suddenly died at the age of 54. Chapter 364 of Berserk was published posthumously on September 10, 2021. Miura would often share details about the series' story with his childhood friend and fellow mangaka Kouji Mori. Berserk resumed on June 24, 2022, with Studio Gaga handling the art and Kouji Mori's supervision.",
-        status: "currently_publishing",
+        status: .publishing,
         score: 9.47,
         chapters: nil,
         volumes: nil,
@@ -115,7 +115,7 @@ nonisolated extension Manga {
         [Written by MAL Rewrite]
         """,
         background: "20th Century Boys won the Kodansha Manga Award in the general category in 2001, an Excellence Prize at the Japan Media Arts Festival in 2002, and the Shogakukan Manga Award in the general category in 2003. The series' combined storyline won the Grand Prize at the 37th Japan Cartoonist Awards on May 9, 2008. VIZ Media published the series in English under the VIZ Signature imprint from February 17, 2009 to September 18, 2012. VIZ Media licensed the series in 2005; however, at Urasawa's request, it was rescheduled for release after Monster finished its English publication due to a change in art style over time. The series has also been published in Brazilian Portuguese by Panini Comics/Planet Manga since September 2012. The series was adapted into a trilogy of live-action films which released in Japan between August 30, 2008 and August 29, 2009.",
-        status: "finished",
+        status: .finished,
         score: 8.95,
         chapters: 249,
         volumes: 22,
@@ -154,7 +154,7 @@ nonisolated extension Manga {
         [Written by MAL Rewrite]
         """,
         background: "Three drama CDs were released in 2002. In all three, Alpha is voiced by Hekiru Shiina and Kokone by Akiko Nakagawa. Both of whom voiced the same characters in the two OVA series. A novel based on Yokohama Kaidashi Kikou called Yokohama Kaidashi Kikou Novel: Seeing, Walking, Being Glad, written by Teriha Katsuki, was published by Kodansha on 23 October 2008. Set long after the conclusion of the manga series, it tells the story of a boy robot named Omega and his search for the legendary Cafe Alpha. (Source: Wikipedia) In 2007, the series won the Seiun Award for Best Manga. Yokohama Kaidashi Kikou has been published in English by Seven Seas Entertainment as omnibus volumes since August 9, 2022.",
-        status: "finished",
+        status: .finished,
         score: 8.68,
         chapters: 142,
         volumes: 14,
@@ -182,7 +182,7 @@ nonisolated extension Manga {
 
 nonisolated extension PaginatedResponse where Item == Manga {
     static let preview = PaginatedResponse(
-        metadata: Metadata(total: 64833, page: 1, per: 2),
+        metadata: Metadata(total: 64833, page: 1, per: 4),
         items: Manga.previewList
     )
 }

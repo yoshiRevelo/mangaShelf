@@ -19,26 +19,7 @@ struct MangaCoverCard: View {
                 Color.clear
                     .aspectRatio(3/4, contentMode: .fit)
                     .overlay {
-                        AsyncImage(url: manga.mainPicture) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            case .failure:
-                                Image(systemName: "books.vertical.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding()
-                            @unknown default:
-                                Image(systemName: "books.vertical.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .padding()
-                            }
-                        }
+                        MangaImage(url: manga.mainPicture)
                     }
                     .clipped()
                 
@@ -46,9 +27,11 @@ struct MangaCoverCard: View {
                         HStack(spacing: 5) {
                             Image(systemName: "star")
                                 .symbolVariant(.fill)
-                            Text("8.4")
-                                .font(.headline)
-                                .fontWeight(.bold)
+                            if let score = manga.score?.toString {
+                                Text(score)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                            }
                         }
                         .padding(.vertical, 6)
                         .foregroundStyle(.white)

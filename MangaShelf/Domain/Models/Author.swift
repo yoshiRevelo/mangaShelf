@@ -12,4 +12,8 @@ nonisolated struct Author: Decodable, Identifiable, Hashable, Sendable {
     let firstName: String
     let lastName: String
     let role: String
+    
+    var authorInformation: String {
+        "\(firstName) \(lastName) · \(role)"
+    }
 }

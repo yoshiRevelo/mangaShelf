@@ -14,8 +14,8 @@ nonisolated struct Manga: Identifiable, Decodable, Hashable, Sendable {
     let titleJapanese: String?
     let synopsis: String?
     let background: String?
-    let status: String
-    let score: Double?
+    let status: Status
+    let score: Decimal?
     let chapters: Int?
     let volumes: Int?
     let startDate: Date?

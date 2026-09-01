@@ -7,13 +7,15 @@
 
 import Foundation
 
-nonisolated enum Demographic: String, CaseIterable, Sendable {
+nonisolated enum Demographic: String, CaseIterable, Sendable, Identifiable {
     case shounen = "Shounen"
     case shoujo = "Shoujo"
     case seinen = "Seinen"
     case kids = "Kids"
     case josei = "Josei"
     case other
+    
+    var id: String { rawValue }
     
     private enum CodingKeys: String, CodingKey {
         case demographic
