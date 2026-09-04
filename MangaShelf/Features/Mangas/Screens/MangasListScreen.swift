@@ -13,7 +13,7 @@ struct MangasListScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @State private var viewModel: MangasListViewModel?
-    
+
     
     var body: some View {
         Group {

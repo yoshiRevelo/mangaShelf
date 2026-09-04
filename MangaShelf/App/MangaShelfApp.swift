@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MangaShelfApp: App {
@@ -15,7 +16,6 @@ struct MangaShelfApp: App {
     var body: some Scene {
         WindowGroup {
             MainTabView()
-                .transition(.opacity)
                 .environment(environment)
                 .environment(router)
         }

@@ -45,19 +45,11 @@ struct MangaCoverCard: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(manga.title)
                                 .font(.title3)
-                            .fontWeight(.bold)
-                            .padding(.top, 8)
-                            
-                            
-                            if let readingProgress {
-                                
-                                ProgressView(value: readingProgress)
-                                    .tint(isComplete ? .success : .accent)
-                                
-                                Text("Tomo 68 de 106")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
+                                .fontWeight(.bold)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.5)
+                                .padding(.top, 8)
+                                .frame(maxHeight: 60)
                         }
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)

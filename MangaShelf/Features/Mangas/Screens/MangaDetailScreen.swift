@@ -13,6 +13,8 @@ struct MangaDetailScreen: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var selectedManga: Manga?
+    @State private var collectionItem: CollectionItem?
+    @State private var showCollectionItemScreen = false
     
     let manga: Manga
     
@@ -99,8 +101,17 @@ struct MangaDetailScreen: View {
                     }
                 }
                 
-                AppButton(title: "Add to collection") {
-                    #warning("Implement with SwiftData")
+                AppButton(title: collectionItem == nil ? "Add to collection" : "Edit item") {
+                    Task {
+                        if collectionItem == nil {
+                            let item = CollectionItem(mangaID: manga.id, cachedTitle: manga.title, totalVolumes: manga.volumes)
+                            try await environment.collectionRepository.upsert(item)
+                            collectionItem = item
+                            showCollectionItemScreen = true
+                        } else {
+                            showCollectionItemScreen = true
+                        }
+                    }
                 }
                 .padding(.top)
             }
@@ -109,8 +120,20 @@ struct MangaDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
         .padding()
+        .task {
+            collectionItem = try? await environment.collectionRepository.fetchManga(mangaID: manga.id)
+        }
         .sheet(item: $selectedManga) { selected in
             SynopsisScreen(title: selected.title, synopsis: selected.synopsis ?? "")
+        }
+        .sheet(isPresented: $showCollectionItemScreen) {
+            if let collectionItem {
+                NavigationStack {
+                    CollectionItemScreen(collectionItem: collectionItem) { } onChange: {
+                        self.collectionItem = nil
+                    }
+                }
+            }
         }
     }
     

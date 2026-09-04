@@ -28,7 +28,9 @@ struct MainTabView: View {
             }
             
             Tab(AppTab.collection.title, systemImage: AppTab.collection.symbol, value: AppTab.collection) {
-                EmptyView()
+                NavigationStack {
+                    CollectionListScreen()
+                }
             }
             
             Tab(AppTab.settings.title, systemImage: AppTab.settings.symbol, value: AppTab.settings) {
