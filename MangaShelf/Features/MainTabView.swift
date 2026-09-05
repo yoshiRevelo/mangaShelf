@@ -34,12 +34,12 @@ struct MainTabView: View {
             }
             
             Tab(AppTab.settings.title, systemImage: AppTab.settings.symbol, value: AppTab.settings) {
-                ContentUnavailableView("This function will be available soon.", systemImage: AppTab.settings.symbol)
+                ContentUnavailableView("This feature will be available soon.", systemImage: AppTab.settings.symbol)
                     .foregroundStyle(.warning)
             }
             
             Tab(AppTab.search.title, systemImage: AppTab.search.symbol, value: AppTab.search, role: .search) {
-                ContentUnavailableView("This function will be available soon.", systemImage: AppTab.search.symbol)
+                ContentUnavailableView("This feature will be available soon.", systemImage: AppTab.search.symbol)
                     .foregroundStyle(.warning)
             }
         }
