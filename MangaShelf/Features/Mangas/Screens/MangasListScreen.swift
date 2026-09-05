@@ -13,14 +13,24 @@ struct MangasListScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @State private var viewModel: MangasListViewModel?
-
+    @State private var selectedDemographic: Demographic? = nil
+    
+    var demographicTitle: String {
+        selectedDemographic?.rawValue.lowercased() ?? "all"
+    }
     
     var body: some View {
         Group {
             if let viewModel {
                 switch viewModel.listState {
                 case .idle, .loading:
-                    ProgressView()
+                    ContentUnavailableView {
+                        VStack {
+                            Label("Loading \(demographicTitle) mangas", systemImage: "apple.books.pages")
+                            ProgressView()
+                                .tint(Color.accent)
+                        }
+                    }
                 case .loaded, .loadMore:
                     content(viewModel)
                         .padding()
@@ -37,6 +47,28 @@ struct MangasListScreen: View {
                 viewModel = MangasListViewModel(repository: environment.mangaRepository)
             }
             await viewModel?.loadMangas()
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Button("All") { selectedDemographic = nil }
+                    ForEach(Demographic.allCases.filter { $0 != .other }) { demographic in
+                        Button(demographic.rawValue) { selectedDemographic = demographic }
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                }
+                .foregroundStyle(Color.accentColor)
+                .onChange(of: selectedDemographic) {
+                    Task {
+                        if let selectedDemographic {
+                            await viewModel?.selectMode(.demographic(selectedDemographic))
+                        } else {
+                            await viewModel?.selectMode(.all)
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -85,9 +117,11 @@ struct MangasListScreen: View {
 }
 
 #Preview("With data") {
-    MangasListScreen()
-        .environment(AppEnvironment.preview())
-        .environment(AppRouter())
+    NavigationStack {
+        MangasListScreen()
+    }
+    .environment(AppEnvironment.preview())
+    .environment(AppRouter())
 }
 
 #Preview("Error") {

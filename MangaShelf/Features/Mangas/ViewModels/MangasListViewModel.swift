@@ -84,4 +84,13 @@ final class MangasListViewModel {
             listState = .error(error.localizedDescription)
         }
     }
+    
+    func selectMode(_ newMode: MangaBrowseMode) async {
+        if mode != newMode {
+            self.mode = newMode
+            metadata = nil
+            listState = .idle
+            await loadMangas()
+        }
+    }
 }

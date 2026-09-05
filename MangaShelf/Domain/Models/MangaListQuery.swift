@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated enum MangaBrowseMode: Sendable {
+nonisolated enum MangaBrowseMode: Sendable, Equatable {
     case all
     case genre(String)
     case theme(String)

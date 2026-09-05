@@ -34,14 +34,17 @@ struct MainTabView: View {
             }
             
             Tab(AppTab.settings.title, systemImage: AppTab.settings.symbol, value: AppTab.settings) {
-                EmptyView()
+                ContentUnavailableView("This function will be available soon.", systemImage: AppTab.settings.symbol)
+                    .foregroundStyle(.warning)
             }
             
             Tab(AppTab.search.title, systemImage: AppTab.search.symbol, value: AppTab.search, role: .search) {
-                EmptyView()
+                ContentUnavailableView("This function will be available soon.", systemImage: AppTab.search.symbol)
+                    .foregroundStyle(.warning)
             }
         }
         .tabBarMinimizeBehavior(.onScrollDown)
+        .tabViewStyle(.sidebarAdaptable)
     }
 }
 
