@@ -14,22 +14,34 @@ struct CollectionListScreen: View {
     @State private var selectedItem: CollectionItem?
     
     var body: some View {
-        Group {
-            if let viewModel {
-                switch viewModel.listState {
-                case .idle, .loading:
+        NavigationSplitView {
+            Group {
+                if let viewModel {
+                    switch viewModel.listState {
+                    case .idle, .loading:
+                        ProgressView()
+                    case .loaded, .loadMore:
+                        content(viewModel)
+                    case .error(let message):
+                        emptyState(viewModel, message: message)
+                    }
+                } else {
                     ProgressView()
-                case .loaded, .loadMore:
-                    content(viewModel)
-                case .error(let message):
-                    emptyState(viewModel, message: message)
+                }
+            }
+            .navigationTitle(AppTab.collection.title)
+            .toolbar(removing: .sidebarToggle)
+            .toolbar(removing: .title)
+        } detail: {
+            if let selectedItem {
+                CollectionItemScreen(collectionItem: selectedItem) { } onChange: {
+                    self.selectedItem = nil
+                    Task { await viewModel?.loadCollection()}
                 }
             } else {
-                ProgressView()
+                ContentUnavailableView("Select an item from your collection", systemImage: "bookmark")
             }
-            
         }
-        .navigationTitle(AppTab.collection.title)
         .task {
             if viewModel == nil {
                 viewModel = CollectionListViewModel(repository: environment.collectionRepository)
@@ -44,7 +56,7 @@ struct CollectionListScreen: View {
         
         let items = viewModel.filteredItems
         
-        List {
+        List(selection: $selectedItem) {
             Section {
                 Picker("Filter", selection: $viewModel.filter) {
                     ForEach(CollectionFilter.allCases) { filter in
@@ -59,29 +71,22 @@ struct CollectionListScreen: View {
             
             Section {
                 ForEach(items) { item in
-                    NavigationLink(value: item) {
-                        RowCollectionItemView(collectionItem: item, onToggleComplete: {
-                            Task { await viewModel.toggleComplete(manga: item) }
-                        })
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive) {
-                                    Task {
-                                        await viewModel.deleteItem(manga: item)
-                                    }
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                        .labelStyle(.iconOnly)
-                                }
+                    RowCollectionItemView(collectionItem: item, onToggleComplete: {
+                        Task { await viewModel.toggleComplete(manga: item) }
+                    })
+                    .tag(item)
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            Task {
+                                await viewModel.deleteItem(manga: item)
+                                selectedItem = nil
                             }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                                .labelStyle(.iconOnly)
+                        }
                     }
                 }
-            }
-        }
-        .navigationDestination(for: CollectionItem.self) { item in
-            CollectionItemScreen(collectionItem: item) {
-                Task { await viewModel.loadCollection() }
-            } onChange: {
-                Task { await viewModel.loadCollection() }
             }
         }
     }
@@ -102,9 +107,7 @@ struct CollectionListScreen: View {
 }
 
 #Preview {
-    NavigationStack {
-        CollectionListScreen()
-    }
+    CollectionListScreen()
     .environment(AppEnvironment.preview())
     .environment(AppRouter())
 }
