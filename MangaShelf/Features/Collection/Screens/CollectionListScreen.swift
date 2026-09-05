@@ -36,7 +36,7 @@ struct CollectionListScreen: View {
             if let selectedItem {
                 CollectionItemScreen(collectionItem: selectedItem) { } onChange: {
                     self.selectedItem = nil
-                    Task { await viewModel?.loadCollection()}
+                    Task { await viewModel?.loadCollection() }
                 }
             } else {
                 ContentUnavailableView("Select an item from your collection", systemImage: "bookmark")
@@ -73,6 +73,7 @@ struct CollectionListScreen: View {
                 ForEach(items) { item in
                     RowCollectionItemView(collectionItem: item, onToggleComplete: {
                         Task { await viewModel.toggleComplete(manga: item) }
+                        selectedItem = item
                     })
                     .tag(item)
                     .swipeActions(edge: .trailing) {
