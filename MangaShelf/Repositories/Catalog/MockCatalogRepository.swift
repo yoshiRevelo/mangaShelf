@@ -9,18 +9,19 @@ import Foundation
 
 @MainActor
 final class MockCatalogRepository: CatalogRepository {
+    
     var genres: [String]
     var themes: [String]
     var demographics: [Demographic]
-    var authors: [Author]
+    var authorsInfo: PaginatedResponse<Author>
     var shouldFail: Bool
     var delay: Duration
     
-    init(genres: [String] = String.genresPreview, themes: [String] = String.themesPreview, demographics: [Demographic] = Demographic.preview, authors: [Author] = Author.preview , shouldFail: Bool = false, delay: Duration = .zero)  {
+    init(genres: [String] = String.genresPreview, themes: [String] = String.themesPreview, demographics: [Demographic] = Demographic.preview, authorsInfo: PaginatedResponse<Author> = PaginatedResponse.preview, shouldFail: Bool = false, delay: Duration = .zero)  {
         self.genres = genres
         self.themes = themes
         self.demographics = demographics
-        self.authors = authors
+        self.authorsInfo = authorsInfo
         self.shouldFail = shouldFail
         self.delay = delay
     }
@@ -40,9 +41,9 @@ final class MockCatalogRepository: CatalogRepository {
         return await demographics
     }
     
-    func fetchAuthors() async throws -> [Author] {
+    func fetchAuthors(page: Int, per: Int) async throws -> PaginatedResponse<Author> {
         try await simulateWork()
-        return await authors
+        return await authorsInfo
     }
 
     private func simulateWork() async throws {

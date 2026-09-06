@@ -258,7 +258,14 @@ extension Demographic {
     }
 }
 
-extension Author {
+nonisolated extension PaginatedResponse where Item == Author {
+    static let preview = PaginatedResponse(
+        metadata: Metadata(total: 25719, page: 1, per: 4),
+        items: Author.preview
+    )
+}
+
+nonisolated extension Author {
     static var preview: [Author] {
         [
             Author(

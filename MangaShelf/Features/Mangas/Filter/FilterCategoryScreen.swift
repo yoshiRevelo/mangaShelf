@@ -16,43 +16,56 @@ struct FilterCategoryScreen: View {
     var body: some View {
         if let viewModel {
             NavigationStack {
-                List {
+                Group {
                     switch category {
                     case .genre:
-                        ForEach(viewModel.genres, id: \.self) { genre in
-                            Button(genre) {
-                                searchTitle = genre
-                                dismiss()
-                                Task {
-                                    await viewModel.selectMode(.genre(genre))
+                        List {
+                            ForEach(viewModel.genres, id: \.self) { genre in
+                                Button(genre) {
+                                    searchTitle = genre
+                                    dismiss()
+                                    Task {
+                                        await viewModel.selectMode(.genre(genre))
+                                    }
                                 }
+                                .font(.headline)
+                                .fontWeight(.medium)
                             }
-                            .font(.headline)
-                            .fontWeight(.medium)
                         }
                     case .themes:
-                        ForEach(viewModel.themes, id: \.self) { theme in
-                            Button(theme) {
-                                searchTitle = theme
-                                dismiss()
-                                Task {
-                                    await viewModel.selectMode(.theme(theme))
+                        List {
+                            ForEach(viewModel.themes, id: \.self) { theme in
+                                Button(theme) {
+                                    searchTitle = theme
+                                    dismiss()
+                                    Task {
+                                        await viewModel.selectMode(.theme(theme))
+                                    }
                                 }
+                                .font(.headline)
+                                .fontWeight(.medium)
                             }
-                            .font(.headline)
-                            .fontWeight(.medium)
                         }
+                        
                     case .demographic:
-                        ForEach(viewModel.demographics) { demographic in
-                            Button(demographic.rawValue) {
-                                searchTitle = demographic.rawValue
-                                dismiss()
-                                Task {
-                                    await viewModel.selectMode(.demographic(demographic))
+                        List {
+                            ForEach(viewModel.demographics) { demographic in
+                                Button(demographic.rawValue) {
+                                    searchTitle = demographic.rawValue
+                                    dismiss()
+                                    Task {
+                                        await viewModel.selectMode(.demographic(demographic))
+                                    }
                                 }
+                                .font(.headline)
+                                .fontWeight(.medium)
                             }
-                            .font(.headline)
-                            .fontWeight(.medium)
+                        }
+                    case .authors:
+                        AuthorsListScreen { author in
+                            searchTitle = author.fullName
+                            dismiss()
+                            Task { await viewModel.selectMode(.author(author.id)) }
                         }
                     }
                 }
@@ -63,7 +76,14 @@ struct FilterCategoryScreen: View {
     }
 }
 
-#Preview {
-    @Previewable @State var searchTitle = "All"
-    FilterCategoryScreen(category: .genre, viewModel: MangasListViewModel(repository: AppEnvironment.preview().mangaRepository, catalogRepository: AppEnvironment.preview().catalogRepository), searchTitle: $searchTitle)
-}
+//#Preview {
+//    @Previewable @State var searchTitle = "All"
+//    FilterCategoryScreen(
+//        category: .genre,
+//        viewModel: MangasListViewModel(
+//            repository: AppEnvironment.preview().mangaRepository,
+//            catalogRepository: AppEnvironment.preview().catalogRepository
+//        ),
+//        searchTitle: $searchTitle
+//    )
+//}

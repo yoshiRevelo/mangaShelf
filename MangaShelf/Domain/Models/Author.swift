@@ -16,4 +16,8 @@ nonisolated struct Author: Decodable, Identifiable, Hashable, Sendable {
     var authorInformation: String {
         "\(firstName) \(lastName) · \(role)"
     }
+    
+    var fullName: String {
+        "\(firstName) \(lastName)"
+    }
 }

@@ -7,34 +7,6 @@
 
 import Foundation
 
-// TODO: si el error ocurre durante un .loadMore, conservar los mangas previos
-// en vez de perderlos (ej. case error(String, previousItems: [Manga] = []))
-
-enum ListState<T> {
-    case idle
-    case loading
-    case loaded(T)
-    case loadMore(T)
-    case error(String)
-}
-
-extension ListState: Equatable where T: Equatable {}
-
-extension ListState {
-    var isLoading: Bool {
-        if case .loading = self { return true }
-        if case .loadMore = self { return true }
-        return false
-    }
-    
-    var loaded: T? {
-        if case .loaded(let value) = self { return value }
-        if case .loadMore(let value) = self { return value }
-        
-        return nil
-    }
-}
-
 @Observable
 @MainActor
 final class MangasListViewModel {

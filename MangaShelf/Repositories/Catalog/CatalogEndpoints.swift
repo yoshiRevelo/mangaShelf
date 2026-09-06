@@ -20,7 +20,16 @@ nonisolated enum CatalogEndpoints {
         return Endpoint(path: "list/demographics")
     }
     
-    static func fetchAuthors() -> Endpoint {
-        return Endpoint(path: "list/authors")
+    static func fetchAuthors(page: Int, per: Int) -> Endpoint {
+        let endPoint: Endpoint
+        
+        let queryItems = [
+            URLQueryItem(name: "page", value: String(page)),
+            URLQueryItem(name: "per", value: String(per))
+        ]
+        
+        endPoint = Endpoint(path: "list/authorsPaged", queryItems: queryItems)
+        
+        return endPoint
     }
 }

@@ -61,6 +61,9 @@ struct MangasListScreen: View {
                     Button(FilterCategory.genre.name) { filterCategory = .genre }
                     Button(FilterCategory.themes.name) { filterCategory = .themes }
                     Button(FilterCategory.demographic.name) { filterCategory = .demographic }
+                    Button(FilterCategory.authors.name) {
+                        filterCategory = .authors
+                    }
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }

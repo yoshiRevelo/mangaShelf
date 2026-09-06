@@ -11,7 +11,7 @@ nonisolated protocol CatalogRepository: Sendable {
     func fetchGenres() async throws -> [String]
     func fetchThemes() async throws -> [String]
     func fetchDemographics() async throws -> [Demographic]
-    func fetchAuthors() async throws -> [Author]
+    func fetchAuthors(page: Int, per: Int) async throws -> PaginatedResponse<Author>
 }
 
 nonisolated final class CatalogRepositoryImpl: CatalogRepository {
@@ -29,8 +29,8 @@ nonisolated final class CatalogRepositoryImpl: CatalogRepository {
         try await network.send(CatalogEndpoints.fetchThemes(), as: [String].self)
     }
     
-    func fetchAuthors() async throws -> [Author] {
-        try await network.send(CatalogEndpoints.fetchAuthors(), as: [Author].self)
+    func fetchAuthors(page: Int, per: Int) async throws -> PaginatedResponse<Author> {        
+        try await network.send(CatalogEndpoints.fetchAuthors(page: page, per: per), as: PaginatedResponse<Author>.self)
     }
     
     func fetchDemographics() async throws -> [Demographic] {
