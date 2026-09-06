@@ -71,7 +71,6 @@ final class CollectionListViewModel {
         manga.isComplete.toggle()
         do {
             try await repository.upsert(manga)
-            await loadCollection()
         } catch {
             listState = .error(error.localizedDescription)
         }
