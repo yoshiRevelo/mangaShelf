@@ -10,6 +10,8 @@ import Foundation
 // Datos de ejemplo para las Previews de SwiftUI y para los mocks de desarrollo/tests.
 // Son mangas reales de la API (Monster y Berserk), para que los previews se vean
 // como se va a ver la app de verdad.
+
+//MARK: - Manga
 nonisolated extension Manga {
 
     private static func isoDate(_ string: String) -> Date {
@@ -185,4 +187,104 @@ nonisolated extension PaginatedResponse where Item == Manga {
         metadata: Metadata(total: 64833, page: 1, per: 4),
         items: Manga.previewList
     )
+}
+
+//MARK: - CollectionItem
+extension CollectionItem {
+
+    static var preview: [CollectionItem] {
+        [
+            CollectionItem(
+                mangaID: Manga.monster.id,
+                cachedTitle: Manga.monster.title,
+                totalVolumes: Manga.monster.volumes,
+                ownedVolumes: 18,
+                readingVolume: 18,
+                isComplete: true
+            ),
+            CollectionItem(
+                mangaID: Manga.berserk.id,
+                cachedTitle: Manga.berserk.title,
+                totalVolumes: Manga.berserk.volumes,
+                ownedVolumes: 5,
+                readingVolume: 5,
+                isComplete: false
+            ),
+            CollectionItem(
+                mangaID: Manga.twentiethCenturyBoys.id,
+                cachedTitle: Manga.twentiethCenturyBoys.title,
+                totalVolumes: Manga.twentiethCenturyBoys.volumes,
+                ownedVolumes: 10,
+                readingVolume: 8,
+                isComplete: false
+            )
+        ]
+    }
+}
+
+//MARK: - Catalog
+extension String {
+    static var genresPreview: [String] {
+        [
+            "Action",
+            "Adventure",
+            "Award Winning",
+            "Drama",
+            "Fantasy"
+        ]
+    }
+    
+    static var themesPreview: [String] {
+        [
+            "Gore",
+            "Military",
+            "Mythology",
+            "Psychological",
+            "Historical",
+            "Samurai",
+            "Romantic Subtext",
+            "School"
+        ]
+    }
+}
+
+extension Demographic {
+    static var preview: [Demographic] {
+        [
+            Demographic.josei,
+            Demographic.kids,
+            Demographic.seinen
+        ]
+    }
+}
+
+extension Author {
+    static var preview: [Author] {
+        [
+            Author(
+                id: UUID(uuidString: "6F0B6948-08C4-4761-8BE1-192E68AB0A2F")!,
+                firstName: "Kentarou",
+                lastName: "Miura",
+                role: "Story & Art"
+            ),
+            Author(
+                id: UUID(uuidString: "0304C4E9-2D89-463A-8FDD-EEAB5B9D57B3")!,
+                firstName: "",
+                lastName: "Studio Gaga",
+                role: "Art"
+            ),
+            Author(
+                id: UUID(uuidString: "25617399-543F-4220-9114-3A4181AF8D80")!,
+                firstName: "Eiichiro",
+                lastName: "Oda",
+                role: "Story & Art"
+            ),
+            Author(
+                id: UUID(uuidString: "30B3A8B4-7A8D-4913-8370-28975F785354")!,
+                firstName: "Hirohiko",
+                lastName: "Araki",
+                role: "Story & Art"
+            )
+        ]
+    }
 }

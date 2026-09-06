@@ -73,7 +73,6 @@ struct CollectionListScreen: View {
                 ForEach(items) { item in
                     RowCollectionItemView(collectionItem: item, onToggleComplete: {
                         Task { await viewModel.toggleComplete(manga: item) }
-                        selectedItem = item
                     })
                     .tag(item)
                     .swipeActions(edge: .trailing) {

@@ -87,6 +87,9 @@ struct CollectionItemScreen: View {
                 .buttonStyle(.borderedProminent)
             }
         }
+        .onChange(of: collectionItem.isComplete) { _, newValue in
+            draft.isComplete = newValue
+        }
         .alert("Delete item?", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 Task {

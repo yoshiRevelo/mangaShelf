@@ -39,11 +39,19 @@ extension ListState {
 @MainActor
 final class MangasListViewModel {
     private let repository: any MangaRepository
+    private let catalogRepository: any CatalogRepository
     private var metadata: Metadata?
     private(set) var listState: ListState<[Manga]> = .idle
     private(set) var mode: MangaBrowseMode = .all
     
     private let per = 14
+    
+    //Catalog
+    private(set) var genres: [String] = []
+    private(set) var themes: [String] = []
+    private(set) var demographics: [Demographic] = []
+    private(set) var catalogErrorMessage: String?
+    private var isCatalogLoaded = false
     
     private var hasMorePages: Bool {
         guard let metadata else { return true}
@@ -60,8 +68,9 @@ final class MangasListViewModel {
         }
     }
     
-    init(repository: any MangaRepository) {
+    init(repository: any MangaRepository, catalogRepository: any CatalogRepository) {
         self.repository = repository
+        self.catalogRepository = catalogRepository
     }
     
     func loadMangas() async {
@@ -91,6 +100,27 @@ final class MangasListViewModel {
             metadata = nil
             listState = .idle
             await loadMangas()
+        }
+    }
+    
+    func loadCatalogIfNeeded() async {
+        guard !isCatalogLoaded else { return }
+        
+        do {
+            async let genresResult = catalogRepository.fetchGenres()
+            async let themesResult = catalogRepository.fetchThemes()
+            async let demographicsResult = catalogRepository.fetchDemographics()
+            
+            let (fetchedGenres, fetchedThemes, fetchedDemographics) = try await (genresResult, themesResult, demographicsResult)
+            
+            genres = fetchedGenres
+            themes = fetchedThemes
+            demographics = fetchedDemographics
+            isCatalogLoaded = true
+        } catch let error as APIError {
+            catalogErrorMessage = error.errorDescription ?? "Undefined error"
+        } catch {
+            catalogErrorMessage = error.localizedDescription
         }
     }
 }

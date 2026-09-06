@@ -13,11 +13,8 @@ struct MangasListScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @State private var viewModel: MangasListViewModel?
-    @State private var selectedDemographic: Demographic? = nil
-    
-    var demographicTitle: String {
-        selectedDemographic?.rawValue.lowercased() ?? "all"
-    }
+    @State private var filterCategory: FilterCategory?
+    @State private var searchTitle: String = "all"
     
     var body: some View {
         Group {
@@ -26,7 +23,7 @@ struct MangasListScreen: View {
                 case .idle, .loading:
                     ContentUnavailableView {
                         VStack {
-                            Label("Loading \(demographicTitle) mangas", systemImage: "apple.books.pages")
+                            Label("Loading \(searchTitle.lowercased()) mangas", systemImage: "apple.books.pages")
                             ProgressView()
                                 .tint(Color.accent)
                         }
@@ -44,31 +41,34 @@ struct MangasListScreen: View {
         .navigationTitle(AppTab.list.title)
         .task {
             if viewModel == nil {
-                viewModel = MangasListViewModel(repository: environment.mangaRepository)
+                viewModel = MangasListViewModel(repository: environment.mangaRepository, catalogRepository: environment.catalogRepository)
             }
-            await viewModel?.loadMangas()
+            async let mangasLoad = viewModel?.loadMangas()
+            async let catalogLoad = viewModel?.loadCatalogIfNeeded()
+            await mangasLoad
+            await catalogLoad
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    Button("All") { selectedDemographic = nil }
-                    ForEach(Demographic.allCases.filter { $0 != .other }) { demographic in
-                        Button(demographic.rawValue) { selectedDemographic = demographic }
+                    Button("All") {
+                        filterCategory = nil
+                        searchTitle = "all"
+                        Task {
+                            await viewModel?.selectMode(.all)
+                        }
                     }
+                    Button(FilterCategory.genre.name) { filterCategory = .genre }
+                    Button(FilterCategory.themes.name) { filterCategory = .themes }
+                    Button(FilterCategory.demographic.name) { filterCategory = .demographic }
                 } label: {
                     Image(systemName: "line.3.horizontal.decrease.circle")
                 }
                 .foregroundStyle(Color.accentColor)
-                .onChange(of: selectedDemographic) {
-                    Task {
-                        if let selectedDemographic {
-                            await viewModel?.selectMode(.demographic(selectedDemographic))
-                        } else {
-                            await viewModel?.selectMode(.all)
-                        }
-                    }
-                }
             }
+        }
+        .sheet(item: $filterCategory) { category in
+            FilterCategoryScreen(category: category, viewModel: viewModel, searchTitle: $searchTitle)
         }
     }
     
