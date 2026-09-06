@@ -13,6 +13,10 @@ struct FilterCategoryScreen: View {
     let viewModel: MangasListViewModel?
     @Binding var searchTitle: String
     
+    private var navTitle: String {
+        category != .authors ? "Select a \(category.name.lowercased())" : "Select an \(category.name.lowercased())"
+    }
+    
     var body: some View {
         if let viewModel {
             NavigationStack {
@@ -69,7 +73,7 @@ struct FilterCategoryScreen: View {
                         }
                     }
                 }
-                .navigationTitle("Select a \(category.name.lowercased())")
+                .navigationTitle(navTitle)
                 .navigationBarTitleDisplayMode(.inline)
             }
         }
