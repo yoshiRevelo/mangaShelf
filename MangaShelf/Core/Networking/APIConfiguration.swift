@@ -19,6 +19,8 @@ nonisolated struct APIConfiguration: Sendable {
     }
     
     static let `default` = APIConfiguration(
-            baseURL: URL(string: "https://mymanga-acacademy-5607149ebe3d.herokuapp.com")!
-        )
+        baseURL: URL(string: "https://mymanga-acacademy-5607149ebe3d.herokuapp.com")!
+    )
+    
+    static let appTokenValue = "sLGH38NhEJ0_anlIWwhsz1-LarClEohiAHQqayF0FY"
 }

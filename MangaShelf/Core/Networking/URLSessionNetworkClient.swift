@@ -34,7 +34,8 @@ nonisolated final class URLSessionNetworkClient: NetworkClient {
     }
     
     private func perform(_ endpoint: Endpoint) async throws -> (Data, HTTPURLResponse) {
-        let request = try endpoint.makeRequest(with: configuration, token: tokenProvider?.accessToken)
+        let token = endpoint.requiresAuth ? try await tokenProvider?.accessToken() : nil
+        let request = try endpoint.makeRequest(with: configuration, token: token)
         
         let data: Data
         let response: URLResponse
@@ -66,7 +67,6 @@ nonisolated final class URLSessionNetworkClient: NetworkClient {
     }
     
     private static func extractServerMessage(from data: Data) -> String? {
-        #warning("Revisar la respuesta para enviar el mensaje de server correcto.")
         struct ServerError: Decodable { let reason: String? }
         return try? JSONDecoder().decode(ServerError.self, from: data).reason
     }

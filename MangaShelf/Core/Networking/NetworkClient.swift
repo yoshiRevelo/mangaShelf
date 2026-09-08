@@ -8,7 +8,7 @@
 import Foundation
 
 nonisolated protocol AuthTokenProviding: Sendable {
-    var accessToken: String? { get }
+    func accessToken() async throws -> String?
 }
 
 nonisolated protocol NetworkClient: Sendable {

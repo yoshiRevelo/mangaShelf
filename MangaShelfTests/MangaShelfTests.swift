@@ -12,13 +12,13 @@ import Testing
 struct MangaShelfTests {
 
     @Test func fetchMangas() async {
-        let viewModel = await MangasListViewModel(repository: MockMangaRepository())
+        let viewModel = await MangasListViewModel(repository: MockMangaRepository(), catalogRepository: MockCatalogRepository())
         await viewModel.loadMangas()
         #expect(await viewModel.mangas.count == 2)
     }
     
     @Test func stopFetchAtSecondCall() async {
-        let viewModel = await MangasListViewModel(repository: MockMangaRepository(delay: .milliseconds(100)))
+        let viewModel = await MangasListViewModel(repository: MockMangaRepository(delay: .milliseconds(100)), catalogRepository: MockCatalogRepository())
         async let first = await viewModel.loadMangas()
         async let second = await viewModel.loadMangas()
         
@@ -28,7 +28,7 @@ struct MangaShelfTests {
     }
 
     @Test func errorState() async {
-        let viewModel = await MangasListViewModel(repository: MockMangaRepository(shouldFail: true))
+        let viewModel = await MangasListViewModel(repository: MockMangaRepository(shouldFail: true), catalogRepository: MockCatalogRepository(shouldFail: true))
         await viewModel.loadMangas()
         
         guard case .error = await viewModel.listState else {
