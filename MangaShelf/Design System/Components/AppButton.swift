@@ -10,6 +10,7 @@ import SwiftUI
 struct AppButton: View {
     let title: String
     var variant: ButtonVariant = .primary
+    var isLoading: Bool = false
     let onTap: () -> Void
     
     var body: some View {
@@ -18,9 +19,16 @@ struct AppButton: View {
                 RoundedRectangle(cornerRadius: 5)
                     .frame(height: 40)
                     .foregroundStyle(variant.background)
-                Text(title)
-                    .foregroundStyle(variant.foreground)
-                    .fontWeight(.semibold)
+                
+                HStack {
+                    if isLoading {
+                        ProgressView()
+                            .tint(.white)
+                    }
+                    Text(title)
+                }
+                .foregroundStyle(variant.foreground)
+                .fontWeight(.semibold)
             }
         }
     }

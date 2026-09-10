@@ -18,7 +18,6 @@ struct MangaShelfApp: App {
             MainTabView()
                 .environment(environment)
                 .environment(router)
-                .tint(.accent)
                 .task {
                     await environment.sessionStore.restore()
                 }

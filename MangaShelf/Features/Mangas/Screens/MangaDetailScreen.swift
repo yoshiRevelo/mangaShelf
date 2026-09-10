@@ -19,6 +19,8 @@ struct MangaDetailScreen: View {
     let manga: Manga
     
     var body: some View {
+        @Bindable var router = router
+        
         ScrollView {
             VStack(alignment: .leading, spacing: 8){
                 MangaImage(url: manga.mainPicture)
@@ -105,9 +107,14 @@ struct MangaDetailScreen: View {
                     Task {
                         if collectionItem == nil {
                             let item = CollectionItem(mangaID: manga.id, cachedTitle: manga.title, totalVolumes: manga.volumes)
-                            try await environment.collectionRepository.upsert(item)
-                            collectionItem = item
-                            showCollectionItemScreen = true
+                            do {
+                                try await environment.collectionRepository.upsert(item)
+                                collectionItem = item
+                                router.toast = ToastMessage("Added to collection", kind: .success)
+                                showCollectionItemScreen = true
+                            } catch {
+                                router.toast = ToastMessage("Could not add to collection", kind: .error)
+                            }
                         } else {
                             showCollectionItemScreen = true
                         }
@@ -133,6 +140,7 @@ struct MangaDetailScreen: View {
                         self.collectionItem = nil
                     }
                 }
+                .toast($router.toast)
             }
         }
     }

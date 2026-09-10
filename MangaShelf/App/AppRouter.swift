@@ -10,6 +10,7 @@ import Foundation
 @Observable
 final class AppRouter {
     var selectedTab: AppTab = .list
+    var toast: ToastMessage?
     
     var listPath: [MangaRoute] = []
     

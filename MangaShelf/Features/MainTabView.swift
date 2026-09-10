@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(AppEnvironment.self) private var environment
     @Environment(AppRouter.self) private var router
     
     var body: some View {
@@ -31,8 +32,15 @@ struct MainTabView: View {
             }
             
             Tab(AppTab.settings.title, systemImage: AppTab.settings.symbol, value: AppTab.settings) {
-                ContentUnavailableView("This feature will be available soon.", systemImage: AppTab.settings.symbol)
-                    .foregroundStyle(.warning)
+                NavigationStack {
+                    if !environment.sessionStore.isAuthenticated {
+                        AuthScreen()
+                    } else {
+                        if let currentUser =  environment.sessionStore.currentUser {
+                            SettingsScreen(user: currentUser)
+                        }
+                    }
+                }
             }
             
             Tab(AppTab.search.title, systemImage: AppTab.search.symbol, value: AppTab.search, role: .search) {
@@ -42,6 +50,7 @@ struct MainTabView: View {
         }
         .tabBarMinimizeBehavior(.onScrollDown)
         .tabViewStyle(.sidebarAdaptable)
+        .toast($router.toast)
     }
 }
 
