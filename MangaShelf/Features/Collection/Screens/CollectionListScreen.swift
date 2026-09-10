@@ -23,7 +23,7 @@ struct CollectionListScreen: View {
                     case .loaded, .loadMore:
                         content(viewModel)
                     case .error(let message):
-                        emptyState(viewModel, message: message)
+                        errorState(viewModel, message: message)
                     }
                 } else {
                     ProgressView()
@@ -56,34 +56,38 @@ struct CollectionListScreen: View {
         
         let items = viewModel.filteredItems
         
-        List(selection: $selectedItem) {
-            Section {
-                Picker("Filter", selection: $viewModel.filter) {
-                    ForEach(CollectionFilter.allCases) { filter in
-                        Text(filter.description)
-                            .tag(filter)
+        if items.isEmpty {
+            emptyState(viewModel, message: "Add a manga first")
+        } else {
+            List(selection: $selectedItem) {
+                Section {
+                    Picker("Filter", selection: $viewModel.filter) {
+                        ForEach(CollectionFilter.allCases) { filter in
+                            Text(filter.description)
+                                .tag(filter)
+                        }
                     }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("Reading Status")
                 }
-                .pickerStyle(.segmented)
-            } header: {
-                Text("Reading Status")
-            }
-            
-            Section {
-                ForEach(items) { item in
-                    RowCollectionItemView(collectionItem: item, onToggleComplete: {
-                        Task { await viewModel.toggleComplete(manga: item) }
-                    })
-                    .tag(item)
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            Task {
-                                await viewModel.deleteItem(manga: item)
-                                selectedItem = nil
+                
+                Section {
+                    ForEach(items) { item in
+                        RowCollectionItemView(collectionItem: item, onToggleComplete: {
+                            Task { await viewModel.toggleComplete(manga: item) }
+                        })
+                        .tag(item)
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                Task {
+                                    await viewModel.deleteItem(manga: item)
+                                    selectedItem = nil
+                                }
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                                    .labelStyle(.iconOnly)
                             }
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                                .labelStyle(.iconOnly)
                         }
                     }
                 }
@@ -92,9 +96,9 @@ struct CollectionListScreen: View {
     }
     
     @ViewBuilder
-    private func emptyState(_ viewModel: CollectionListViewModel, message: String) -> some View {
+    private func errorState(_ viewModel: CollectionListViewModel, message: String) -> some View {
         ContentUnavailableView {
-            Label("No mangas available", systemImage: "apple.books.pages")
+            Label("Something went wrong", systemImage: "xmark.circle")
         } description: {
             Text(message)
         } actions: {
@@ -104,10 +108,25 @@ struct CollectionListScreen: View {
             .buttonStyle(.borderedProminent)
         }
     }
+    
+    @ViewBuilder
+    private func emptyState(_ viewModel: CollectionListViewModel, message: String) -> some View {
+        ContentUnavailableView {
+            Label("Collection Empty", systemImage: "apple.books.pages")
+        } description: {
+            Text(message)
+        } actions: { }
+    }
 }
 
 #Preview {
     CollectionListScreen()
     .environment(AppEnvironment.preview())
+    .environment(AppRouter())
+}
+
+#Preview("Error") {
+    CollectionListScreen()
+    .environment(AppEnvironment.failPreview())
     .environment(AppRouter())
 }
