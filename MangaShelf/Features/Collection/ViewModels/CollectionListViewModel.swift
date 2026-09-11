@@ -49,7 +49,13 @@ final class CollectionListViewModel {
     
     func loadCollection() async {
         guard !listState.isLoading else { return }
-        listState = .loading
+        
+        if let items = listState.loaded {
+                listState = .loadMore(items)
+            } else {
+                listState = .loading
+            }
+        
         do {
             let items = try await repository.loadCollection()
             listState = .loaded(items)
@@ -61,7 +67,10 @@ final class CollectionListViewModel {
     func deleteItem(manga: CollectionItem) async {
         do {
             try await repository.delete(manga)
-            await loadCollection()
+            if var items = listState.loaded {
+                items.removeAll { $0.id == manga.id }
+                listState = .loaded(items)
+            }
         } catch {
             listState = .error(error.localizedDescription)
         }

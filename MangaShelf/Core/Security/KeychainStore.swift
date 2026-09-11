@@ -103,4 +103,5 @@ nonisolated struct KeychainStore: KeychainStoring {
 nonisolated enum KeychainKey {
     static let accessToken = "accessToken"
     static let refreshToken = "refreshToken"
+    static let legacyToken = "legacyToken"
 }

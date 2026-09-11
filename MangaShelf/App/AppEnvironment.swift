@@ -33,8 +33,10 @@ final class AppEnvironment {
         
         let network = URLSessionNetworkClient(tokenProvider: sessionManager)
         let mangaRepository = MangaRepositoryImpl(network: network)
-        let container = AppModelContainer.live()
-        let collectionRepository = LocalCollectionRepository(container: container)
+//        let container = AppModelContainer.live()
+        let collectionNetwork = URLSessionNetworkClient(tokenProvider: LegacyTokenProvider(sessionManager: sessionManager))
+        let collectionRepository = RemoteCollectionRepository(network: collectionNetwork)
+        
         let catalogRepository = CatalogRepositoryImpl(network: network)
         
         return AppEnvironment(mangaRepository: mangaRepository, collectionRepository: collectionRepository, catalogRepository: catalogRepository, sessionManager: sessionManager, sessionStore: sessionStore)

@@ -13,3 +13,7 @@ nonisolated struct AuthTokenDTO: Decodable, Sendable {
     let tokenUse: String
     let expiresIn: Int64
 }
+
+nonisolated struct LegacyTokenDTO: Decodable, Sendable {
+    let token: String
+}

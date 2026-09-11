@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CollectionListScreen: View {
     @Environment(AppEnvironment.self) private var environment
+    @Environment(AppRouter.self) private var router
     
     @State private var viewModel: CollectionListViewModel?
     @State private var selectedItem: CollectionItem?
@@ -16,23 +17,37 @@ struct CollectionListScreen: View {
     var body: some View {
         NavigationSplitView {
             Group {
-                if let viewModel {
-                    switch viewModel.listState {
-                    case .idle, .loading:
-                        ProgressView()
-                    case .loaded, .loadMore:
-                        content(viewModel)
-                    case .error(let message):
-                        errorState(viewModel, message: message)
+                if !environment.sessionStore.isAuthenticated {
+                    ContentUnavailableView {
+                        Label("Sign in", systemImage: "person.circle")
+                    } description: {
+                        Text("To view this section sign in first")
+                    } actions: {
+                        Button("Go to settings") {
+                            router.selectedTab = .settings
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
                 } else {
-                    ProgressView()
+                        if let viewModel {
+                            switch viewModel.listState {
+                            case .idle, .loading:
+                                ProgressView()
+                            case .loaded, .loadMore:
+                                content(viewModel)
+                            case .error(let message):
+                                errorState(viewModel, message: message)
+                            }
+                        } else {
+                            ProgressView()
+                        }
+                    }
                 }
-            }
             .navigationTitle(AppTab.collection.title)
             .toolbar(removing: .sidebarToggle)
             .toolbar(removing: .title)
-        } detail: {
+            }
+        detail: {
             if let selectedItem {
                 CollectionItemScreen(collectionItem: selectedItem) { } onChange: {
                     self.selectedItem = nil
@@ -42,10 +57,17 @@ struct CollectionListScreen: View {
                 ContentUnavailableView("Select an item from your collection", systemImage: "bookmark")
             }
         }
-        .task {
+        .task(id: environment.sessionStore.isAuthenticated) {
+            selectedItem = nil
+            guard environment.sessionStore.isAuthenticated else { return }
             if viewModel == nil {
                 viewModel = CollectionListViewModel(repository: environment.collectionRepository)
             }
+            if viewModel?.listState.loaded?.isEmpty ?? true {
+                await viewModel?.loadCollection()
+            }
+        }
+        .task(id: router.collectionDidChange) {
             await viewModel?.loadCollection()
         }
     }
@@ -57,7 +79,7 @@ struct CollectionListScreen: View {
         let items = viewModel.filteredItems
         
         if items.isEmpty {
-            emptyState(viewModel, message: "Add a manga first")
+            emptyState(viewModel, message: "Add a new manga ")
         } else {
             List(selection: $selectedItem) {
                 Section {
@@ -92,6 +114,9 @@ struct CollectionListScreen: View {
                     }
                 }
             }
+            .refreshable {
+                await viewModel.loadCollection()
+            }
         }
     }
     
@@ -112,10 +137,15 @@ struct CollectionListScreen: View {
     @ViewBuilder
     private func emptyState(_ viewModel: CollectionListViewModel, message: String) -> some View {
         ContentUnavailableView {
-            Label("Collection Empty", systemImage: "apple.books.pages")
+            Label("Your collection is empty", systemImage: "apple.books.pages")
         } description: {
             Text(message)
-        } actions: { }
+        } actions: {
+            Button("Try again") {
+                router.selectedTab = .list
+            }
+            .buttonStyle(.borderedProminent)
+        }
     }
 }
 

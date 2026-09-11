@@ -19,4 +19,9 @@ nonisolated struct AuthToken: Codable, Sendable {
         self.token = dto.token
         self.expirationDate = Date() + TimeInterval(dto.expiresIn)
     }
+    
+    init(legacyToken: String, validity: TimeInterval = 60 * 60 * 24 * 2) {
+        self.token = legacyToken
+        self.expirationDate = Date() + validity
+    }
 }

@@ -35,6 +35,7 @@ nonisolated final class URLSessionNetworkClient: NetworkClient {
     
     private func perform(_ endpoint: Endpoint) async throws -> (Data, HTTPURLResponse) {
         let token = endpoint.requiresAuth ? try await tokenProvider?.accessToken() : nil
+
         let request = try endpoint.makeRequest(with: configuration, token: token)
         
         let data: Data

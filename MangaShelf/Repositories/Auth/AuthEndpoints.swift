@@ -44,4 +44,16 @@ nonisolated enum AuthEndpoints {
     static func userInfo(accessToken: String) -> Endpoint {
         Endpoint(path: "users/session/me", headers: [APIConfiguration.Header.authorization: "Bearer \(accessToken)"])
     }
+    
+    //MARK: - LegacyLogin
+    
+    static func legacyLogin(email: String, password: String) -> Endpoint {
+        let credentials = "\(email):\(password)"
+        let authorization = Data(credentials.utf8).base64EncodedString()
+        return Endpoint(path: "users/login", method: .post, headers: [APIConfiguration.Header.authorization: "Basic \(authorization)"])
+    }
+    
+    static func legacyRenew(token: String) -> Endpoint {
+        Endpoint(path: "users/renew", method: .post, headers: [APIConfiguration.Header.authorization: "Bearer \(token)"])
+    }
 }

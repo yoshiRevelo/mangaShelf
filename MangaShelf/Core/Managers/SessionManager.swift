@@ -13,6 +13,10 @@ actor SessionManager: AuthTokenProviding {
     private var accessToken: AuthToken?
     private var refreshTask: Task<AuthToken, Error>?
     
+    //MARK: - LegacyToken
+    private var legacyToken: AuthToken?
+    private var legacyRefreshTokenTask: Task<AuthToken, Error>?
+    
     var hasStoredSession: Bool {
         (try? keychain.read(for: KeychainKey.refreshToken)) != nil
     }
@@ -37,7 +41,11 @@ actor SessionManager: AuthTokenProviding {
     func login(email: String, password: String) async throws {
         let refreshToken = try await authRepository.login(email: email, password: password)
         try storeRefreshToken(refreshToken)
+        
+        let legacyTokenRefresh = try await authRepository.legacyLogin(email: email, password: password)
+        try storeRefreshToken(legacyTokenRefresh, tokenType: .legacy)
         accessToken = nil
+        legacyToken = nil
     }
     
     func currentUser() async throws -> UserInfo? {
@@ -49,6 +57,10 @@ actor SessionManager: AuthTokenProviding {
         try? keychain.delete(for: KeychainKey.refreshToken)
         accessToken = nil
         refreshTask = nil
+        
+        try? keychain.delete(for: KeychainKey.legacyToken)
+        legacyToken = nil
+        legacyRefreshTokenTask = nil
     }
     
     private func refreshedAccessToken() async throws -> AuthToken? {
@@ -69,13 +81,46 @@ actor SessionManager: AuthTokenProviding {
         return newAccessToken
     }
     
-    private func storeRefreshToken(_ token: AuthToken) throws {
+    private func storeRefreshToken(_ token: AuthToken, tokenType: TokenType = .new) throws {
         let data = try JSONEncoder().encode(token)
-        try keychain.save(data, for: KeychainKey.refreshToken)
+        try keychain.save(data, for: tokenType == .new ? KeychainKey.refreshToken : KeychainKey.legacyToken)
     }
     
-    private func loadRefreshToken() async throws -> AuthToken? {
-        guard let data = try keychain.read(for: KeychainKey.refreshToken) else { return nil }
+    private func loadRefreshToken(tokenType: TokenType = .new) async throws -> AuthToken? {
+        guard let data = tokenType == .new ? try keychain.read(for: KeychainKey.refreshToken) : try keychain.read(for: KeychainKey.legacyToken) else { return nil }
         return try JSONDecoder().decode(AuthToken.self, from: data)
+    }
+    
+    //MARK: - Legacy functions
+    func legacyAccessToken() async throws -> String? {
+        if let legacyToken, !legacyToken.isExpired {
+            return legacyToken.token
+        }
+        
+        return try await refreshedLegacyAccessToken()?.token
+    }
+    
+    private func refreshedLegacyAccessToken() async throws -> AuthToken? {
+        
+        if let legacyRefreshTokenTask { return try await legacyRefreshTokenTask.value }
+        
+        guard let storedRefreshToken = try await loadRefreshToken(tokenType: .legacy), !storedRefreshToken.isExpired else { return nil }
+        
+        let task = Task<AuthToken, Error> {
+            try await authRepository.legacyRefresh(token: storedRefreshToken.token)
+        }
+        legacyRefreshTokenTask = task
+        defer { legacyRefreshTokenTask = nil }
+        
+        let newAccessToken = try await task.value
+        try storeRefreshToken(newAccessToken, tokenType: .legacy)
+        legacyToken =  newAccessToken
+        
+        return newAccessToken
+    }
+    
+    private enum TokenType {
+        case new
+        case legacy
     }
 }

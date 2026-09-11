@@ -12,6 +12,8 @@ nonisolated protocol AuthRepository: Sendable {
     func login(email: String, password: String) async throws -> AuthToken
     func refreshToken(token: String) async throws -> AuthToken
     func userInfo(accessToken: String) async throws -> UserInfo
+    func legacyLogin(email: String, password: String) async throws -> AuthToken
+    func legacyRefresh(token: String) async throws -> AuthToken
 }
 
 nonisolated final class AuthRepositoryImpl: AuthRepository {
@@ -38,5 +40,15 @@ nonisolated final class AuthRepositoryImpl: AuthRepository {
     
     func userInfo(accessToken: String) async throws -> UserInfo {
         try await network.send(AuthEndpoints.userInfo(accessToken: accessToken), as: UserInfo.self)
+    }
+    
+    func legacyLogin(email: String, password: String) async throws -> AuthToken {
+        let dto = try await network.send(AuthEndpoints.legacyLogin(email: email, password: password), as: LegacyTokenDTO.self)
+        return AuthToken(legacyToken: dto.token)
+    }
+    
+    func legacyRefresh(token: String) async throws -> AuthToken {
+        let dto = try await network.send(AuthEndpoints.legacyRenew(token: token), as: LegacyTokenDTO.self)
+        return AuthToken(legacyToken: dto.token)
     }
 }

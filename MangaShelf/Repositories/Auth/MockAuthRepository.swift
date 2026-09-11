@@ -47,6 +47,16 @@ final class MockAuthRepository: AuthRepository, @unchecked Sendable {
         return UserInfo(id: UUID(), isActive: true, isAdmin: false, role: "user", email: "test@test.com")
     }
     
+    func legacyLogin(email: String, password: String) async throws -> AuthToken {
+        try await simulateWork()
+        return AuthToken(legacyToken: "12345678")
+    }
+    
+    func legacyRefresh(token: String) async throws -> AuthToken {
+        try await simulateWork()
+        return AuthToken(legacyToken: "87654321")
+    }
+    
     private func simulateWork() async throws {
         if delay != .zero { try? await Task.sleep(for: delay) }
         if shouldFail { throw APIError.offline }

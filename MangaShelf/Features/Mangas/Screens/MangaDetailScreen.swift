@@ -105,15 +105,21 @@ struct MangaDetailScreen: View {
                 
                 AppButton(title: collectionItem == nil ? "Add to collection" : "Edit item") {
                     Task {
+                        guard environment.sessionStore.isAuthenticated else {
+                            router.toast = ToastMessage("Sign in to add to your collection", kind: .error)
+                            return
+                        }
+                        
                         if collectionItem == nil {
                             let item = CollectionItem(mangaID: manga.id, cachedTitle: manga.title, totalVolumes: manga.volumes)
                             do {
                                 try await environment.collectionRepository.upsert(item)
                                 collectionItem = item
                                 router.toast = ToastMessage("Added to collection", kind: .success)
+                                router.collectionDidChange += 1
                                 showCollectionItemScreen = true
                             } catch {
-                                router.toast = ToastMessage("Could not add to collection", kind: .error)
+                                router.toast = ToastMessage((error as? APIError)?.errorDescription ?? error.localizedDescription, kind: .error)
                             }
                         } else {
                             showCollectionItemScreen = true
@@ -127,7 +133,7 @@ struct MangaDetailScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
         .padding()
-        .task {
+        .task(id: environment.sessionStore.isAuthenticated) {
             collectionItem = try? await environment.collectionRepository.fetchManga(mangaID: manga.id)
         }
         .sheet(item: $selectedManga) { selected in
