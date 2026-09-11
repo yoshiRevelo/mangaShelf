@@ -78,8 +78,8 @@ struct CollectionListScreen: View {
         
         let items = viewModel.filteredItems
         
-        if items.isEmpty {
-            emptyState(viewModel, message: "Add a new manga ")
+        if items.isEmpty && viewModel.filter == .all {
+            emptyState(viewModel, message: "Add a new manga")
         } else {
             List(selection: $selectedItem) {
                 Section {
