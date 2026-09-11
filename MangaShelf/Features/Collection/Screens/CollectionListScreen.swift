@@ -141,7 +141,7 @@ struct CollectionListScreen: View {
         } description: {
             Text(message)
         } actions: {
-            Button("Try again") {
+            Button("Go to mangas") {
                 router.selectedTab = .list
             }
             .buttonStyle(.borderedProminent)
