@@ -18,6 +18,7 @@ struct RowCollectionItemView: View {
                 Text(collectionItem.cachedTitle)
                     .font(.title3)
                     .fontWeight(.medium)
+                    .lineLimit(3)
                     
                 Spacer()
                 

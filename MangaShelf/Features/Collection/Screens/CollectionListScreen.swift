@@ -46,7 +46,7 @@ struct CollectionListScreen: View {
             .navigationTitle(AppTab.collection.title)
             .toolbar(removing: .sidebarToggle)
             .toolbar(removing: .title)
-            .navigationSplitViewColumnWidth(min: 220, ideal: 260, max: 320)
+            .navigationSplitViewColumnWidth(min: 240, ideal: 280, max: 320)
             } detail: {
             if let selectedItem {
                 CollectionItemScreen(collectionItem: selectedItem, dismissesOnSave: false) { } onChange: {
