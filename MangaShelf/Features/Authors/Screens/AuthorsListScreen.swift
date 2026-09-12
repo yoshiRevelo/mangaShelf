@@ -33,6 +33,9 @@ struct AuthorsListScreen: View {
                 ProgressView()
             }
         }
+        #if os(macOS)
+        .frame(minWidth: 380, minHeight: 320)
+        #endif
         .task {
             if viewModel == nil {
                 viewModel = AuthorsListViewModel(catalogRepository: environment.catalogRepository)
@@ -47,9 +50,18 @@ struct AuthorsListScreen: View {
         
         List {
             ForEach(viewModel.authors) { author in
-                Button(author.fullName) {
+                Button {
                     onTap(author)
+                } label: {
+                    Text(author.fullName)
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
                 }
+                #if os(macOS)
+                .buttonStyle(.plain)
+                #endif
                 .font(.headline)
                 .fontWeight(.medium)
                 .onAppear {

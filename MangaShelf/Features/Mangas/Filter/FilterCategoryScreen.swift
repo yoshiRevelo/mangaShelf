@@ -25,12 +25,18 @@ struct FilterCategoryScreen: View {
                     case .genre:
                         List {
                             ForEach(viewModel.genres, id: \.self) { genre in
-                                Button(genre) {
+                                Button {
                                     searchTitle = genre
                                     dismiss()
                                     Task {
                                         await viewModel.selectMode(.genre(genre))
                                     }
+                                } label: {
+                                    Text(genre)
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
                                 }
                                 .font(.headline)
                                 .fontWeight(.medium)
@@ -39,12 +45,18 @@ struct FilterCategoryScreen: View {
                     case .themes:
                         List {
                             ForEach(viewModel.themes, id: \.self) { theme in
-                                Button(theme) {
+                                Button {
                                     searchTitle = theme
                                     dismiss()
                                     Task {
                                         await viewModel.selectMode(.theme(theme))
                                     }
+                                } label: {
+                                    Text(theme)
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
                                 }
                                 .font(.headline)
                                 .fontWeight(.medium)
@@ -54,12 +66,18 @@ struct FilterCategoryScreen: View {
                     case .demographic:
                         List {
                             ForEach(viewModel.demographics) { demographic in
-                                Button(demographic.rawValue) {
+                                Button {
                                     searchTitle = demographic.rawValue
                                     dismiss()
                                     Task {
                                         await viewModel.selectMode(.demographic(demographic))
                                     }
+                                } label: {
+                                    Text(demographic.rawValue)
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
                                 }
                                 .font(.headline)
                                 .fontWeight(.medium)
@@ -73,6 +91,21 @@ struct FilterCategoryScreen: View {
                         }
                     }
                 }
+                #if os(macOS)
+                .buttonStyle(.plain)
+                #endif
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(role: .cancel) {
+                            dismiss()
+                        } label: {
+                            Label("Close", systemImage: "xmark")
+                        }
+                    }
+                }
+                #if os(macOS)
+                .frame(minWidth: 380, minHeight: 320)
+                #endif
                 .navigationTitle(navTitle)
                 #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
