@@ -49,7 +49,7 @@ struct MangasListScreen: View {
             await catalogLoad
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Menu {
                     Button("All") {
                         filterCategory = nil

@@ -46,13 +46,14 @@ struct CollectionListScreen: View {
             .navigationTitle(AppTab.collection.title)
             .toolbar(removing: .sidebarToggle)
             .toolbar(removing: .title)
-            }
-        detail: {
+            .navigationSplitViewColumnWidth(min: 220, ideal: 260, max: 320)
+            } detail: {
             if let selectedItem {
-                CollectionItemScreen(collectionItem: selectedItem) { } onChange: {
+                CollectionItemScreen(collectionItem: selectedItem, dismissesOnSave: false) { } onChange: {
                     self.selectedItem = nil
                     Task { await viewModel?.loadCollection() }
                 }
+                .id(selectedItem.mangaID)
             } else {
                 ContentUnavailableView("Select an item from your collection", systemImage: "bookmark")
             }

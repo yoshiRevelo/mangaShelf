@@ -45,6 +45,7 @@ struct MangaCoverCard: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(manga.title)
                                 .font(.title3)
+                                .foregroundStyle(.ink)
                                 .fontWeight(.bold)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)

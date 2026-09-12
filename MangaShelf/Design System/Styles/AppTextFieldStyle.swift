@@ -7,11 +7,14 @@
 import SwiftUI
 
 struct AppTextFieldStyle: TextFieldStyle {
-    // swiftlint:disable:next identifier_name
+
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .font(.system(size: 17))
             .foregroundStyle(Color.ink)
             .tint(.accent)
+            #if os(macOS)
+            .textFieldStyle(.plain)
+            #endif
     }
 }

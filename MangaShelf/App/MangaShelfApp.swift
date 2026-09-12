@@ -22,5 +22,8 @@ struct MangaShelfApp: App {
                     await environment.sessionStore.restore()
                 }
         }
+//    #if os(macOS)
+//    .defaultSize(width: 1100, height: 700)
+//    #endif
     }
 }

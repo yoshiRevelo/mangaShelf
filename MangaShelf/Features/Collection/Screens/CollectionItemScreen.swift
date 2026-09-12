@@ -16,6 +16,7 @@ struct CollectionItemScreen: View {
     let collectionItem: CollectionItem
     let onSave: () -> Void
     let onChange: () -> Void
+    var dismissesOnSave: Bool = true
     
     @State private var showDeleteAlert = false
     
@@ -36,8 +37,9 @@ struct CollectionItemScreen: View {
         (draft.readingVolume != collectionItem.readingVolume)
     }
     
-    init(collectionItem: CollectionItem, onSave: @escaping () -> Void, onChange: @escaping () -> Void){
+    init(collectionItem: CollectionItem, dismissesOnSave: Bool = true, onSave: @escaping () -> Void, onChange: @escaping () -> Void){
         self.collectionItem = collectionItem
+        self.dismissesOnSave = dismissesOnSave
         self.onSave = onSave
         self.onChange = onChange
         _draft = State(initialValue: DraftItem(ownedVolumes: collectionItem.ownedVolumes, readingVolume: collectionItem.readingVolume, isComplete: collectionItem.isComplete) )
@@ -57,24 +59,33 @@ struct CollectionItemScreen: View {
             }
         }
         .navigationTitle(collectionItem.cachedTitle)
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .presentationDetents([.medium, .large])
         .interactiveDismissDisabled(isDirty)
         .presentationDragIndicator(isDirty ? .hidden : .visible)
+        #if os(macOS)
+        .frame(minWidth: 380, minHeight: 320)
+        #endif
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(role: .confirm) {
                     Task {
                         await viewModel?.upsert(draft: draft)
                         onSave()
-                        dismiss()
+                        if dismissesOnSave {
+                            dismiss()
+                        }
                     }
                     
                 } label: {
-                    Label("", systemImage: "checkmark")
+                    Label("Save", systemImage: "checkmark")
                 }
                 .tint(.second)
+                #if os(iOS)
                 .clipShape(.circle)
+                #endif
                 .disabled(!isDirty)
             }
             
@@ -82,10 +93,22 @@ struct CollectionItemScreen: View {
                 Button(role: .destructive) {
                     showDeleteAlert = true
                 } label: {
-                    Label("", systemImage: "trash")
+                    Label("Delete", systemImage: "trash")
                 }
                 .buttonStyle(.borderedProminent)
             }
+            
+            #if os(macOS)
+            if dismissesOnSave {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        Label("Close", systemImage: "xmark")
+                    }
+                }
+            }
+            #endif
         }
         .onChange(of: collectionItem.isComplete) { _, newValue in
             draft.isComplete = newValue
@@ -125,8 +148,10 @@ struct CollectionItemScreen: View {
             
             Section() { } header: {
                 Toggle("Collection complete", isOn: $draft.isComplete)
+                    .toggleStyle(.switch)
             }
         }
+        .formStyle(.grouped)
     }
 }
 

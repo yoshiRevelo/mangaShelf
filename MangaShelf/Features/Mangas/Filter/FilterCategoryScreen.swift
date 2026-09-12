@@ -74,7 +74,9 @@ struct FilterCategoryScreen: View {
                     }
                 }
                 .navigationTitle(navTitle)
+                #if os(iOS)
                 .navigationBarTitleDisplayMode(.inline)
+                #endif
             }
         }
     }

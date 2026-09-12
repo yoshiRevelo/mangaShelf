@@ -48,8 +48,10 @@ struct MainTabView: View {
                     .foregroundStyle(.warning)
             }
         }
+        #if os(iOS)
         .tabBarMinimizeBehavior(.onScrollDown)
         .tabViewStyle(.sidebarAdaptable)
+        #endif
         .toast($router.toast)
     }
 }

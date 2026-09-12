@@ -28,7 +28,9 @@ struct AuthScreen: View {
             VStack(alignment: .leading) {
                 form(viewModel)
             }
+            #if os(iOS)
             .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+            #endif
         }
         .toast($router.toast)
         .onAppear {
@@ -48,12 +50,20 @@ struct AuthScreen: View {
                 .padding(.bottom, 26)
             
             VStack(spacing: 16) {
+                #if os(iOS)
                 AppField(label: "Email", text: $viewModel.email, placeholder: "hello@apple.com", systemImage: "envelope", error: nil, keyboardType: .emailAddress, textContentType: .emailAddress, autocapitalization: .never)
+                #else
+                AppField(label: "Email", text: $viewModel.email, placeholder: "hello@apple.com", systemImage: "envelope")
+                #endif
                 
+                #if os(iOS)
                 AppField(label: "Password", text: $viewModel.password, placeholder: "Your password", systemImage: "lock", isSecure: true, textContentType: .password)
+                #else
+                AppField(label: "Password", text: $viewModel.password, placeholder: "Your password", systemImage: "lock", isSecure: true)
+                #endif
                 
                 if viewModel.mode == .register {
-                    AppField(label: "Confirm Password", text: $viewModel.confirmPassword, placeholder: "Confirm  password", systemImage: "lock", isSecure: true, textContentType: .password)
+                    AppField(label: "Confirm Password", text: $viewModel.confirmPassword, placeholder: "Confirm  password", systemImage: "lock", isSecure: true)
                         .animation(.snappy, value: viewModel.mode)
                 }
                 
@@ -63,12 +73,18 @@ struct AuthScreen: View {
                 .font(.system(size: 14.5, weight: .semibold))
                 .foregroundStyle(Color.second)
                 .frame(maxWidth: .infinity, alignment: .trailing)
+                #if os(macOS)
+                .buttonStyle(.plain)
+                #endif
                 
                 AppButton(title: title, variant: .primary, isLoading: viewModel.isLoading) {
                     Task {
                         await submit() }
                 }
                 .disabled(viewModel.isLoading)
+                #if os(macOS)
+                .buttonStyle(.plain)
+                #endif
             }
         }
         .padding()

@@ -14,9 +14,12 @@ struct AppField: View {
     var isSecure: Bool = false
     var multiline: Bool = false
     var error: String?
+    
+    #if os(iOS)
     var keyboardType: UIKeyboardType = .default
     var textContentType: UITextContentType?
     var autocapitalization: TextInputAutocapitalization = .sentences
+    #endif
 
     @State private var revealSecure = false
     @FocusState private var isFocused: Bool
@@ -38,7 +41,7 @@ struct AppField: View {
                 if let systemImage {
                     Image(systemName: systemImage)
                         .font(.system(size: 18))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.ink.opacity(0.2))
                         .frame(width: 22)
                 }
 
@@ -88,17 +91,21 @@ struct AppField: View {
             }
         }
         .textFieldStyle(AppTextFieldStyle())
+        #if os(iOS)
         .keyboardType(keyboardType)
         .textContentType(textContentType)
         .textInputAutocapitalization(autocapitalization)
         .autocorrectionDisabled(isSecure || keyboardType == .emailAddress)
+        #else
+        .autocorrectionDisabled(isSecure)
+        #endif
         .focused($isFocused)
         .overlay(alignment: multiline ? .topLeading : .leading) {
             if text.isEmpty {
                 Text(placeholder)
                     .font(.system(size: 17))
-                    .foregroundStyle(.secondary)
-                    .tint(.secondary)
+                    .foregroundStyle(Color.ink.opacity(0.2))
+                    .tint(Color.ink.opacity(0.2))
                     .allowsHitTesting(false)
             }
         }
@@ -109,9 +116,14 @@ struct AppField: View {
     @Previewable @State var email = ""
     @Previewable @State var password = "secret"
     VStack(spacing: 16) {
+    #if os(iOS)
         AppField(label: "Email", text: $email, placeholder: "hola@ejemplo.com", systemImage: "envelope", keyboardType: .emailAddress, textContentType: .emailAddress, autocapitalization: .never)
-        AppField(label: "Contraseña", text: $password, placeholder: "Tu contraseña", systemImage: "lock", isSecure: true, error: "Mínimo 6 caracteres")
+        
+        AppField(label: "Email", text: $email, placeholder: "hola@ejemplo.com", systemImage: "envelope", textContentType: .password, autocapitalization: .never)
+    #else
+        AppField(label: "Email", text: $email, placeholder: "hola@ejemplo.com", systemImage: "envelope")
+    #endif
     }
     .padding()
-//    .background(Color.appSurface)
+    //    .background(Color.appSurface)
 }

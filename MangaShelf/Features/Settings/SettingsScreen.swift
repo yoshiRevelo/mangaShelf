@@ -31,6 +31,7 @@ struct SettingsScreen: View {
                 
                 Toggle("Is active", isOn: .constant(user.isActive))
                     .disabled(true)
+                    .toggleStyle(.switch)
             }
             
             Section("Information") {
@@ -43,6 +44,7 @@ struct SettingsScreen: View {
                 }
             }
         }
+        .formStyle(.grouped)
         .navigationTitle(AppTab.settings.title)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

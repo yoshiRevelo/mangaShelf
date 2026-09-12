@@ -126,12 +126,17 @@ struct MangaDetailScreen: View {
                         }
                     }
                 }
+                #if os(macOS)
+                .buttonStyle(.plain)
+                #endif
                 .padding(.top)
             }
         }
         .scrollIndicators(.hidden)
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+        #endif
         .padding()
         .task(id: environment.sessionStore.isAuthenticated) {
             collectionItem = try? await environment.collectionRepository.fetchManga(mangaID: manga.id)
