@@ -25,12 +25,15 @@ struct MangaShelfWidgetView: View {
                         .frame(maxWidth: .infinity)
                     
                     ForEach(entry.mangas) { manga in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(manga.title)
-                                .font(.headline)
-                                .lineLimit(1)
-                            
-                            CollectionInditatorView(readingVolume: manga.readingVolume, ownedVolumes: manga.ownedVolumes)
+                        Link(destination: URL(string: "mangashelf://collection?mangaID=\(manga.mangaID)")!) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(manga.title)
+                                    .font(.headline)
+                                    .lineLimit(1)
+                                
+                                CollectionInditatorView(readingVolume: manga.readingVolume, ownedVolumes: manga.ownedVolumes)
+                            }
+                            .contentShape(Rectangle())
                         }
                     }
                 }

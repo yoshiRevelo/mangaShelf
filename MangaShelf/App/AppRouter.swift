@@ -15,6 +15,7 @@ final class AppRouter {
     var listPath: [MangaRoute] = []
     
     var collectionDidChange: Int = 0
+    var widgetMangaID: Int?
     
     func openDetailFromList(_ manga: Manga) {
         selectedTab = .list

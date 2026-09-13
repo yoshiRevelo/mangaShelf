@@ -36,5 +36,6 @@ final class SessionStore {
     func signOut() async {
         await sessionManager.logout()
         currentUser = nil
+        ReadingSnapshotStore.clear()
     }
 }

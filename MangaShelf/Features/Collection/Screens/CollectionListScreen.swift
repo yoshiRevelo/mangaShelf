@@ -120,6 +120,11 @@ struct CollectionListScreen: View {
             .refreshable {
                 await viewModel.loadCollection()
             }
+            .onChange(of: router.widgetMangaID) {
+                guard let mangaID = router.widgetMangaID else { return }
+                selectedItem = viewModel.filteredItems.first(where: { $0.mangaID == mangaID })
+                router.widgetMangaID = nil
+            }
         }
     }
     

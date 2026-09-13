@@ -19,10 +19,15 @@ struct MangaShelfApp: App {
                 .environment(environment)
                 .environment(router)
                 .onOpenURL { url in
-                            if url.host == "collection" {
-                                router.selectedTab = .collection
-                            }
+                    router.selectedTab = .collection
+                    if url.host == "collection" {
+                        if let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                           let idString = components.queryItems?.first( where: { $0.name == "mangaID" })?.value,
+                           let mangaID = Int(idString) {
+                            router.widgetMangaID = mangaID
                         }
+                    }
+                }
                 .task {
                     await environment.sessionStore.restore()
                 }

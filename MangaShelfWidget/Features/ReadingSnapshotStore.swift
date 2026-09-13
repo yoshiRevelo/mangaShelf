@@ -38,4 +38,10 @@ enum ReadingSnapshotStore {
         
         return items
     }
+    
+    static func clear() {
+        guard let defaults = UserDefaults(suiteName: suiteName) else { return }
+        defaults.removeObject(forKey: key)
+        WidgetCenter.shared.reloadAllTimelines()
+    }
 }
