@@ -86,7 +86,7 @@ struct CollectionListScreen: View {
         } else {
             List(selection: $selectedItem) {
                 Section {
-                    Picker("Filter", selection: $viewModel.filter) {
+                    Picker("", selection: $viewModel.filter) {
                         ForEach(CollectionFilter.allCases) { filter in
                             Text(filter.description)
                                 .tag(filter)
