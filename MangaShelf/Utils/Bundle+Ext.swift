@@ -11,6 +11,6 @@ extension Bundle {
     static func appVersion() -> String {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-"
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-"
-        return "Version \(version) (\(build))"
+        return String(localized: "Version \(version) (\(build))")
     }
 }

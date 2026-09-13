@@ -37,10 +37,10 @@ nonisolated enum AppTab: String, CaseIterable, Identifiable {
     
     var title: String {
         switch self {
-        case .list: "Mangas"
-        case .collection: "My collection"
-        case .search: "Search"
-        case .account: "Account"
+        case .list: String(localized: "Mangas")
+        case .collection: String(localized: "My collection")
+        case .search: String(localized: "Search")
+        case .account: String(localized: "Account")
         }
     }
     

@@ -1,0 +1,42 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "No mangas in progress" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún manga en progreso"
+          }
+        }
+      }
+    },
+    "Reading" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leyendo"
+          }
+        }
+      }
+    },
+    "Reading now" : {
+
+    },
+    "Shows the mangas you're currently reading and your progress." : {
+
+    },
+    "Volume %@ of %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomo %@ de %@"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

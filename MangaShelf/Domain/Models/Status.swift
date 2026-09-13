@@ -27,9 +27,9 @@ extension Status: Decodable {
 extension Status {
     var title: String {
         switch self {
-        case .publishing: "In Progress"
-        case .finished: "Finished"
-        case .other: "No info"
+        case .publishing: String(localized: "In Progress")
+        case .finished: String(localized: "Finished")
+        case .other: String(localized: "No info")
         }
     }
     

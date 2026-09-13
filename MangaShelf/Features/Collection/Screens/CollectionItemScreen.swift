@@ -136,10 +136,10 @@ struct CollectionItemScreen: View {
         
         Form {
             Section {
-                Stepper("Owned volumes \(draft.ownedVolumes)", value: $draft.ownedVolumes
+                Stepper("Owned volumes \(draft.ownedVolumes.formatted())", value: $draft.ownedVolumes
                         , in: 0...totalVolumes)
                 
-                Stepper("Reading volume \(readingVolume.wrappedValue)", value: readingVolume, in: 0...draft.ownedVolumes)
+                Stepper("Reading volume \(readingVolume.wrappedValue.formatted())", value: readingVolume, in: 0...draft.ownedVolumes)
             } header: {
                 Text("Volumes Information")
             } footer: {

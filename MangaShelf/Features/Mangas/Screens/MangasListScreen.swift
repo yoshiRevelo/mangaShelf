@@ -5,6 +5,7 @@
 //  Created by Josimar Revelo on 29/08/26.
 //
 
+import Foundation
 import SwiftUI
 
 struct MangasListScreen: View {
@@ -23,7 +24,7 @@ struct MangasListScreen: View {
                 case .idle, .loading:
                     ContentUnavailableView {
                         VStack {
-                            Label("Loading \(searchTitle.lowercased()) mangas", systemImage: "apple.books.pages")
+                            Label(searchTitle == "all" ? String(localized: "Loading mangas") : String(localized: "Loading \(searchTitle.lowercased()) mangas"), systemImage: "apple.books.pages")
                             ProgressView()
                                 .tint(Color.accent)
                         }

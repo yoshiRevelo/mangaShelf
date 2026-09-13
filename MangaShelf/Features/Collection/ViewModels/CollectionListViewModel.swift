@@ -15,9 +15,9 @@ enum CollectionFilter: String, CaseIterable, Hashable, Identifiable, Equatable {
     
     var description: String {
         switch self {
-        case .all: "All"
-        case .finished: "Finished"
-        case .pending: "Pending"
+        case .all: String(localized: "All")
+        case .finished: String(localized: "Finished")
+        case .pending: String(localized: "Pending")
         }
     }
 }

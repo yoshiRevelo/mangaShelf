@@ -49,7 +49,7 @@ final class AuthorsListViewModel {
             metadata =  result.metadata
             listState = .loaded(previousAuthors + result.items)
         } catch let error as APIError {
-            listState = .error(error.errorDescription ?? "Undefined error")
+            listState = .error(error.errorDescription ?? String(localized: "Undefined error"))
         } catch {
             listState = .error(error.localizedDescription)
         }

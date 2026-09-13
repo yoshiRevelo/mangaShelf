@@ -5,6 +5,7 @@
 //  Created by Josimar Revelo on 08/09/26.
 //
 
+import Foundation
 import SwiftUI
 
 struct AuthScreen: View {
@@ -13,11 +14,19 @@ struct AuthScreen: View {
     @State private var viewModel = AuthViewModel()
     
     var title: String {
-        viewModel.mode == .login ? "Sign in" : "Sign up"
+        viewModel.mode == .login ? String(localized: "Sign in") : String(localized: "Sign up")
+    }
+    
+    var buttonTitle: String {
+        if viewModel.isLoading {
+            viewModel.mode == .login ? String(localized: "Signing in...") : String(localized: "Signing up...")
+        } else {
+            title
+        }
     }
     
     var description: String {
-        "\(title) to save your personal collection"
+        String(localized: "\(title) to save your personal collection")
     }
     
     var body: some View {
@@ -62,7 +71,7 @@ struct AuthScreen: View {
                 #endif
                 
                 if viewModel.mode == .register {
-                    AppField(label: "Confirm Password", text: $viewModel.confirmPassword, placeholder: "Confirm  password", systemImage: "lock", isSecure: true)
+                    AppField(label: "Confirm Password", text: $viewModel.confirmPassword, placeholder: "Confirm password", systemImage: "lock", isSecure: true)
                         .animation(.snappy, value: viewModel.mode)
                 }
                 
@@ -76,7 +85,7 @@ struct AuthScreen: View {
                 .buttonStyle(.plain)
                 #endif
                 
-                AppButton(title: title, variant: .primary, isLoading: viewModel.isLoading) {
+                AppButton(title: buttonTitle, variant: .primary, isLoading: viewModel.isLoading) {
                     Task {
                         await submit() }
                 }
@@ -94,7 +103,7 @@ struct AuthScreen: View {
         if success {
             if viewModel.mode == .register {
                 viewModel.toggleMode()
-                router.toast = ToastMessage("Account created, sign in", kind: .success)
+                router.toast = ToastMessage(String(localized: "Account created, sign in"), kind: .success)
             }
         } else {
             router.toast = ToastMessage(viewModel.errorMessage, kind: .error)

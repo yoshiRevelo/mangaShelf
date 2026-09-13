@@ -179,7 +179,42 @@ nonisolated extension Manga {
         demographics: [.seinen]
     )
 
-    static let previewList: [Manga] = [.monster, .berserk, .twentiethCenturyBoys, .yokohamaKaidashiKikou]
+    static let naruto = Manga(
+        id: 11,
+        title: "Naruto",
+        titleEnglish: "Naruto",
+        titleJapanese: "NARUTO―ナルト―",
+        synopsis: """
+        Whenever Naruto Uzumaki proclaims that he will someday become the Hokage—a title bestowed upon the best ninja in the Village Hidden in the Leaves—no one takes him seriously. Since birth, Naruto has been shunned and ridiculed by his fellow villagers. But their contempt isn't because Naruto is loud-mouthed, mischievous, or because of his ineptitude in the ninja arts, but because there is a demon inside him. Prior to Naruto's birth, the powerful and deadly Nine-Tailed Fox attacked the village. In order to stop the rampage, the Fourth Hokage sacrificed his life to seal the demon inside the body of the newborn Naruto.
+
+        And so when he is assigned to Team 7—along with his new teammates Sasuke Uchiha and Sakura Haruno, under the mentorship of veteran ninja Kakashi Hatake—Naruto is forced to work together with other people for the first time in his life. Through undergoing vigorous training and taking on challenging missions, Naruto must learn what it means to work in a team and carve his own route toward becoming a full-fledged ninja recognized by his village.
+
+        [Written by MAL Rewrite]
+        """,
+        background: "Naruto has sold over 250 million copies worldwide as of 2020, making it the 4th highest grossing manga series of all time. It was nominated for the 19th Tezuka Osamu Cultural Prize in 2014, and in the same year Masashi Kishimoto was awarded Rookie of the Year in the media fine arts category by Japan's Agency for Cultural Affairs.",
+        status: .finished,
+        score: 8.07,
+        chapters: 700,
+        volumes: 72,
+        startDate: isoDate("1999-09-21T00:00:00Z"),
+        endDate: isoDate("2014-11-10T00:00:00Z"),
+        mainPicture: URL(string: "https://cdn.myanimelist.net/images/manga/3/249658l.jpg"),
+        url: URL(string: "https://myanimelist.net/manga/11/Naruto"),
+        authors: [
+            Author(id: UUID(uuidString: "AC7020D1-D99F-4846-8E23-9C86181959AF")!, firstName: "Masashi", lastName: "Kishimoto", role: "Story & Art")
+        ],
+        genres: [
+            Genre(id: UUID(uuidString: "72C8E862-334F-4F00-B8EC-E1E4125BB7CD")!, genre: "Action"),
+            Genre(id: UUID(uuidString: "BE70E289-D414-46A9-8F15-928EAFBC5A32")!, genre: "Adventure"),
+            Genre(id: UUID(uuidString: "B3E8D4B2-7EE4-49CD-8DB0-9897619B3F62")!, genre: "Fantasy")
+        ],
+        themes: [
+            Theme(id: UUID(uuidString: "ADC7CBC8-36B9-4E52-924A-4272B7B2CB2C")!, theme: "Martial Arts")
+        ],
+        demographics: [.shounen]
+    )
+
+    static let previewList: [Manga] = [.monster, .berserk, .twentiethCenturyBoys, .yokohamaKaidashiKikou, .naruto]
 }
 
 nonisolated extension PaginatedResponse where Item == Manga {

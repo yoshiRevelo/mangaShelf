@@ -34,15 +34,15 @@ final class AuthViewModel {
         errorMessage = ""
         
         guard Validators.isValidEmail(email) else {
-            errorMessage = "Enter a valid email"
+            errorMessage = String(localized: "Enter a valid email")
             return false }
         guard Validators.isValidPassword(password) else {
-            errorMessage = "Password must be at least 8 characters"
+            errorMessage = String(localized: "Password must be at least 8 characters")
             return false
         }
         
         if mode == .register && password != confirmPassword {
-            errorMessage = "Passwords do not match"
+            errorMessage = String(localized: "Passwords do not match")
             return false
         }
         

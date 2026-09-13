@@ -60,7 +60,7 @@ final class MangasListViewModel {
             metadata =  result.metadata
             listState = .loaded(previousMangas + result.items)
         } catch let error as APIError {
-            listState = .error(error.errorDescription ?? "Undefined error")
+            listState = .error(error.errorDescription ?? String(localized: "Undefined error"))
         } catch {
             listState = .error(error.localizedDescription)
         }
@@ -90,7 +90,7 @@ final class MangasListViewModel {
             demographics = fetchedDemographics
             isCatalogLoaded = true
         } catch let error as APIError {
-            catalogErrorMessage = error.errorDescription ?? "Undefined error"
+            catalogErrorMessage = error.errorDescription ?? String(localized: "Undefined error")
         } catch {
             catalogErrorMessage = error.localizedDescription
         }

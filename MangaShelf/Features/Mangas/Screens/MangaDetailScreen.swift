@@ -5,6 +5,7 @@
 //  Created by Josimar Revelo on 29/08/26.
 //
 
+import Foundation
 import SwiftUI
 
 struct MangaDetailScreen: View {
@@ -30,15 +31,7 @@ struct MangaDetailScreen: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 
                 if let score = manga.score {
-                    HStack {
-                        Text(score.toString)
-                            .font(.largeTitle)
-                            .fontWeight(.medium)
-                        Image(systemName: "star")
-                            .symbolVariant(.fill)
-                    }
-                    .foregroundStyle(.yellow)
-                    .frame(maxWidth: .infinity)
+                    ScoreView(score)
                 }
                 
                 Text(manga.title)
@@ -53,6 +46,19 @@ struct MangaDetailScreen: View {
                 }
                 .offset(y: -10)
                 
+                HStack(spacing: 4) {
+                    ForEach(Array(manga.genres.enumerated()), id: \.element.id) { index, genre in
+                        if index > 0 {
+                            Text("·")
+                                .foregroundStyle(.secondary)
+                        }
+                        Text(genre.genre)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                
+                
                 if let volumesAndChaptersText {
                     Text(volumesAndChaptersText)
                     .font(.caption)
@@ -64,14 +70,6 @@ struct MangaDetailScreen: View {
                     .font(.headline)
                     .foregroundStyle(manga.status.color)
                 
-                HStack {
-                    FlowLayout {
-                        ForEach(manga.genres) { genre in
-                            ChipView(title: genre.genre, small: true, color: .secondary, action: {})
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 if let resume = manga.synopsis {
                     section("Synopsis") {
@@ -103,10 +101,10 @@ struct MangaDetailScreen: View {
                     }
                 }
                 
-                AppButton(title: collectionItem == nil ? "Add to collection" : "Edit item") {
+                AppButton(title: collectionItem == nil ? String(localized: "Add to collection") : String(localized: "Edit item")) {
                     Task {
                         guard environment.sessionStore.isAuthenticated else {
-                            router.toast = ToastMessage("Sign in to add to your collection", kind: .error)
+                            router.toast = ToastMessage(String(localized: "Sign in to add to your collection"), kind: .error)
                             return
                         }
                         
@@ -115,7 +113,7 @@ struct MangaDetailScreen: View {
                             do {
                                 try await environment.collectionRepository.upsert(item)
                                 collectionItem = item
-                                router.toast = ToastMessage("Added to collection", kind: .success)
+                                router.toast = ToastMessage(String(localized: "Added to collection"), kind: .success)
                                 router.collectionDidChange += 1
                                 showCollectionItemScreen = true
                             } catch {
@@ -159,7 +157,7 @@ struct MangaDetailScreen: View {
     }
     
     @ViewBuilder
-    private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+    private func section<Content: View>(_ title: LocalizedStringKey, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .font(.title2)
@@ -170,11 +168,40 @@ struct MangaDetailScreen: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
+    @ViewBuilder
+    private func ScoreView(_ score: Decimal) -> some View {
+        let scoreValue = NSDecimalNumber(decimal: score).doubleValue
+        let filledStars = min(5, max(0, Int((scoreValue / 2).rounded())))
+        
+        if filledStars > 0 {
+            HStack(spacing: 6) {
+                HStack(spacing: 2) {
+                    ForEach(0..<5, id: \.self) { index in
+                        Image(systemName: "star")
+                            .font(.title2)
+                            .symbolVariant(.fill)
+                            .foregroundStyle(index < filledStars ? .yellow : .secondary)
+                            .padding(.top, 8)
+                            .padding(.bottom, 8)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+    
     private var volumesAndChaptersText: String? {
-        let parts: [String] = [
-            manga.volumes.map { "\($0.formatted()) \($0 > 1 ? "tomos" : "tomo")" },
-            manga.chapters.map { "\($0.formatted()) \($0 > 1 ? "capítulos" : "capítulo")" }
-        ].compactMap { $0 }
+        let volumesText: String? = manga.volumes.map { count in
+            count > 1
+                ? String(localized: "\(count.formatted()) volumes")
+                : String(localized: "\(count.formatted()) volume")
+        }
+        let chaptersText: String? = manga.chapters.map { count in
+            count > 1
+                ? String(localized: "\(count.formatted()) chapters")
+                : String(localized: "\(count.formatted()) chapter")
+        }
+        let parts: [String] = [volumesText, chaptersText].compactMap { $0 }
         
         return parts.isEmpty ? nil : parts.joined(separator: " | ")
     }
@@ -183,6 +210,14 @@ struct MangaDetailScreen: View {
 #Preview {
     NavigationStack {
         MangaDetailScreen(manga: .monster)
+    }
+    .environment(AppRouter())
+    .environment(AppEnvironment.preview())
+}
+
+#Preview("Naruto") {
+    NavigationStack {
+        MangaDetailScreen(manga: .naruto)
     }
     .environment(AppRouter())
     .environment(AppEnvironment.preview())

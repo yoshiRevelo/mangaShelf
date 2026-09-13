@@ -42,10 +42,10 @@ enum FilterCategory: Identifiable {
     
     var name: String {
         switch self {
-        case .genre: "Genre"
-        case .themes: "Theme"
-        case .demographic: "Demographic"
-        case .authors: "Author"
+        case .genre: String(localized: "Genre")
+        case .themes: String(localized: "Theme")
+        case .demographic: String(localized: "Demographic")
+        case .authors: String(localized: "Author")
         }
     }
 }

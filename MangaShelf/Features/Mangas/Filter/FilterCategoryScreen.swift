@@ -5,6 +5,7 @@
 //  Created by Josimar Revelo on 05/09/26.
 //
 
+import Foundation
 import SwiftUI
 
 struct FilterCategoryScreen: View {
@@ -14,7 +15,12 @@ struct FilterCategoryScreen: View {
     @Binding var searchTitle: String
     
     private var navTitle: String {
-        category != .authors ? "Select a \(category.name.lowercased())" : "Select an \(category.name.lowercased())"
+        switch category {
+        case .genre: String(localized: "Select a genre")
+        case .themes: String(localized: "Select a theme")
+        case .demographic: String(localized: "Select a demographic")
+        case .authors: String(localized: "Select an author")
+        }
     }
     
     var body: some View {
