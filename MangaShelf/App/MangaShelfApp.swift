@@ -18,6 +18,11 @@ struct MangaShelfApp: App {
             MainTabView()
                 .environment(environment)
                 .environment(router)
+                .onOpenURL { url in
+                            if url.host == "collection" {
+                                router.selectedTab = .collection
+                            }
+                        }
                 .task {
                     await environment.sessionStore.restore()
                 }

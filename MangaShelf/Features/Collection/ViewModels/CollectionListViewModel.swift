@@ -59,6 +59,7 @@ final class CollectionListViewModel {
         do {
             let items = try await repository.loadCollection()
             listState = .loaded(items)
+            ReadingSnapshotStore.save(from: items)
         } catch {
             listState = .error(error.localizedDescription)
         }
@@ -70,6 +71,7 @@ final class CollectionListViewModel {
             if var items = listState.loaded {
                 items.removeAll { $0.id == manga.id }
                 listState = .loaded(items)
+                ReadingSnapshotStore.save(from: items)
             }
         } catch {
             listState = .error(error.localizedDescription)
@@ -80,6 +82,7 @@ final class CollectionListViewModel {
         manga.isComplete.toggle()
         do {
             try await repository.upsert(manga)
+            ReadingSnapshotStore.save(from: listState.loaded ?? [])
         } catch {
             listState = .error(error.localizedDescription)
         }

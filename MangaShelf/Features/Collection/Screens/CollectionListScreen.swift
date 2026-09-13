@@ -49,7 +49,9 @@ struct CollectionListScreen: View {
             .navigationSplitViewColumnWidth(min: 240, ideal: 280, max: 320)
             } detail: {
             if let selectedItem {
-                CollectionItemScreen(collectionItem: selectedItem, dismissesOnSave: false) { } onChange: {
+                CollectionItemScreen(collectionItem: selectedItem, dismissesOnSave: false) {
+                    router.collectionDidChange += 1
+                } onChange: {
                     self.selectedItem = nil
                     Task { await viewModel?.loadCollection() }
                 }

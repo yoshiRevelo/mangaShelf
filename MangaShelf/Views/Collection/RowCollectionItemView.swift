@@ -36,35 +36,10 @@ struct RowCollectionItemView: View {
                 .buttonStyle(.plain)
             }
             
-            CollectionInditatorView(collectionItem: collectionItem)
+            CollectionInditatorView(readingVolume: collectionItem.readingVolume ?? 0, ownedVolumes: collectionItem.ownedVolumes)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
-    }
-}
-
-struct CollectionInditatorView: View {
-    let collectionItem: CollectionItem
-    
-    private var readingVolume: Int {
-        collectionItem.readingVolume ?? 0
-    }
-    
-    private var readingProgress: Double { ((Double(readingVolume) * 100.0) / Double(collectionItem.ownedVolumes)) / 100.0
-    }
-    
-    private var readingStatusColor: Color {
-        readingVolume == collectionItem.ownedVolumes ? .success : .warning
-    }
-    
-    var body: some View {
-        if collectionItem.ownedVolumes > 0 {
-            ProgressView(value: readingProgress)
-                .tint(readingStatusColor)
-        }
-        
-        Text("Tomo \(readingVolume.formatted())  de \(collectionItem.ownedVolumes.formatted())")
-            .font(.caption)
-            .foregroundStyle(.secondary)
     }
 }
 
@@ -72,6 +47,6 @@ struct CollectionInditatorView: View {
     VStack {
         RowCollectionItemView(collectionItem: CollectionItem.preview.first!) { }
         
-        CollectionInditatorView(collectionItem: CollectionItem.preview.last!)
+        CollectionInditatorView(readingVolume: 3, ownedVolumes: 1)
     }
 }

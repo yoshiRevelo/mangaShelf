@@ -6,7 +6,20 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5B49B8F73055DC13003F33CF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49B8F63055DC13003F33CF /* WidgetKit.framework */; };
+		5B49B8F93055DC13003F33CF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49B8F83055DC13003F33CF /* SwiftUI.framework */; };
+		5B49B9043055DC15003F33CF /* MangaShelfWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5B49B8F43055DC12003F33CF /* MangaShelfWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		5B49B9023055DC15003F33CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5BC1928E303243E100D4EB0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B49B8F33055DC12003F33CF;
+			remoteInfo = MangaShelfWidgetExtension;
+		};
 		5BC194843039232600D4EB0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5BC1928E303243E100D4EB0E /* Project object */;
@@ -16,14 +29,79 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5B49B9093055DC15003F33CF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5B49B9043055DC15003F33CF /* MangaShelfWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5B49B8F43055DC12003F33CF /* MangaShelfWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MangaShelfWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B49B8F63055DC13003F33CF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		5B49B8F83055DC13003F33CF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		5B49B90A3055DCA5003F33CF /* MangaShelfWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MangaShelfWidgetExtension.entitlements; sourceTree = "<group>"; };
 		5BC19296303243E100D4EB0E /* MangaShelf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaShelf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC194803039232600D4EB0E /* MangaShelfTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangaShelfTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5B35E1F83055ECA8007B95E2 /* Exceptions for "MangaShelfWidget" folder in "MangaShelfWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5B49B8F33055DC12003F33CF /* MangaShelfWidgetExtension */;
+		};
+		5B35E2013056083D007B95E2 /* Exceptions for "MangaShelf" folder in "MangaShelf" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5BC19295303243E100D4EB0E /* MangaShelf */;
+		};
+		5B49B90F3055DE9E003F33CF /* Exceptions for "MangaShelfWidget" folder in "MangaShelf" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Domain/ReadingManga.swift,
+				Features/ReadingSnapshotStore.swift,
+			);
+			target = 5BC19295303243E100D4EB0E /* MangaShelf */;
+		};
+		5B49B9153055DF96003F33CF /* Exceptions for "MangaShelf" folder in "MangaShelfWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Domain/Models/Collection/CollectionItem.swift,
+				Resources/Assets.xcassets,
+				Views/Collection/CollectionInditatorView.swift,
+			);
+			target = 5B49B8F33055DC12003F33CF /* MangaShelfWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5B49B8FA3055DC13003F33CF /* MangaShelfWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5B49B90F3055DE9E003F33CF /* Exceptions for "MangaShelfWidget" folder in "MangaShelf" target */,
+				5B35E1F83055ECA8007B95E2 /* Exceptions for "MangaShelfWidget" folder in "MangaShelfWidgetExtension" target */,
+			);
+			path = MangaShelfWidget;
+			sourceTree = "<group>";
+		};
 		5BC19298303243E100D4EB0E /* MangaShelf */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5B35E2013056083D007B95E2 /* Exceptions for "MangaShelf" folder in "MangaShelf" target */,
+				5B49B9153055DF96003F33CF /* Exceptions for "MangaShelf" folder in "MangaShelfWidgetExtension" target */,
+			);
 			path = MangaShelf;
 			sourceTree = "<group>";
 		};
@@ -35,6 +113,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5B49B8F13055DC12003F33CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B49B8F93055DC13003F33CF /* SwiftUI.framework in Frameworks */,
+				5B49B8F73055DC13003F33CF /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5BC19293303243E100D4EB0E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,11 +139,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B49B8F53055DC13003F33CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B49B8F63055DC13003F33CF /* WidgetKit.framework */,
+				5B49B8F83055DC13003F33CF /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5BC1928D303243E100D4EB0E = {
 			isa = PBXGroup;
 			children = (
+				5B49B90A3055DCA5003F33CF /* MangaShelfWidgetExtension.entitlements */,
 				5BC19298303243E100D4EB0E /* MangaShelf */,
 				5BC194813039232600D4EB0E /* MangaShelfTests */,
+				5B49B8FA3055DC13003F33CF /* MangaShelfWidget */,
+				5B49B8F53055DC13003F33CF /* Frameworks */,
 				5BC19297303243E100D4EB0E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,6 +165,7 @@
 			children = (
 				5BC19296303243E100D4EB0E /* MangaShelf.app */,
 				5BC194803039232600D4EB0E /* MangaShelfTests.xctest */,
+				5B49B8F43055DC12003F33CF /* MangaShelfWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +173,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5B49B8F33055DC12003F33CF /* MangaShelfWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B49B9063055DC15003F33CF /* Build configuration list for PBXNativeTarget "MangaShelfWidgetExtension" */;
+			buildPhases = (
+				5B49B8F03055DC12003F33CF /* Sources */,
+				5B49B8F13055DC12003F33CF /* Frameworks */,
+				5B49B8F23055DC12003F33CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5B49B8FA3055DC13003F33CF /* MangaShelfWidget */,
+			);
+			name = MangaShelfWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = MangaShelfWidgetExtension;
+			productReference = 5B49B8F43055DC12003F33CF /* MangaShelfWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		5BC19295303243E100D4EB0E /* MangaShelf */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BC192A1303243E200D4EB0E /* Build configuration list for PBXNativeTarget "MangaShelf" */;
@@ -80,10 +202,12 @@
 				5BC19292303243E100D4EB0E /* Sources */,
 				5BC19293303243E100D4EB0E /* Frameworks */,
 				5BC19294303243E100D4EB0E /* Resources */,
+				5B49B9093055DC15003F33CF /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5B49B9033055DC15003F33CF /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5BC19298303243E100D4EB0E /* MangaShelf */,
@@ -128,6 +252,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					5B49B8F33055DC12003F33CF = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					5BC19295303243E100D4EB0E = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -153,11 +280,19 @@
 			targets = (
 				5BC19295303243E100D4EB0E /* MangaShelf */,
 				5BC1947F3039232600D4EB0E /* MangaShelfTests */,
+				5B49B8F33055DC12003F33CF /* MangaShelfWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5B49B8F23055DC12003F33CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5BC19294303243E100D4EB0E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -175,6 +310,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5B49B8F03055DC12003F33CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5BC19292303243E100D4EB0E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,6 +334,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5B49B9033055DC15003F33CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5B49B8F33055DC12003F33CF /* MangaShelfWidgetExtension */;
+			targetProxy = 5B49B9023055DC15003F33CF /* PBXContainerItemProxy */;
+		};
 		5BC194853039232600D4EB0E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5BC19295303243E100D4EB0E /* MangaShelf */;
@@ -200,6 +348,68 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5B49B9073055DC15003F33CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MangaShelfWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 001;
+				DEVELOPMENT_TEAM = RH5ZA96NCY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaShelfWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MangaShelfWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 3.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sample.MangaShelf.MangaShelfWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B49B9083055DC15003F33CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = MangaShelfWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 001;
+				DEVELOPMENT_TEAM = RH5ZA96NCY;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaShelfWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MangaShelfWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 3.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sample.MangaShelf.MangaShelfWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5BC1929F303243E200D4EB0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -324,13 +534,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MangaShelf/MangaShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 001;
+				DEVELOPMENT_TEAM = RH5ZA96NCY;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaShelf/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -364,13 +577,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MangaShelf/MangaShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 001;
+				DEVELOPMENT_TEAM = RH5ZA96NCY;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaShelf/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,6 +666,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5B49B9063055DC15003F33CF /* Build configuration list for PBXNativeTarget "MangaShelfWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B49B9073055DC15003F33CF /* Debug */,
+				5B49B9083055DC15003F33CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5BC19291303243E100D4EB0E /* Build configuration list for PBXProject "MangaShelf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -147,7 +147,9 @@ struct MangaDetailScreen: View {
         .sheet(isPresented: $showCollectionItemScreen) {
             if let collectionItem {
                 NavigationStack {
-                    CollectionItemScreen(collectionItem: collectionItem) { } onChange: {
+                    CollectionItemScreen(collectionItem: collectionItem) {
+                        router.collectionDidChange += 1
+                    } onChange: {
                         self.collectionItem = nil
                     }
                 }
