@@ -25,7 +25,7 @@ struct CollectionInditatorView: View {
                 .tint(readingStatusColor)
         }
         
-        Text("Tomo \(readingVolume.formatted())  de \(ownedVolumes.formatted())")
+        Text("Volume \(readingVolume.formatted()) of \(ownedVolumes.formatted())")
             .font(.caption)
             .foregroundStyle(.secondary)
     }
