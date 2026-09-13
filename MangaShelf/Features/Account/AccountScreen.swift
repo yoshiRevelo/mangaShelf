@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsScreen: View {
+struct AccountScreen: View {
     @Environment(AppEnvironment.self) private var environment
     @State private var signout = false
     
@@ -45,7 +45,7 @@ struct SettingsScreen: View {
             }
         }
         .formStyle(.grouped)
-        .navigationTitle(AppTab.settings.title)
+        .navigationTitle(AppTab.account.title)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -73,7 +73,7 @@ struct SettingsScreen: View {
 }
 #Preview {
     NavigationStack {
-        SettingsScreen(user: UserInfo(id: UUID(), isActive: true, isAdmin: false, role: "user", email: "test@test.com"))
+        AccountScreen(user: UserInfo(id: UUID(), isActive: true, isAdmin: false, role: "user", email: "test@test.com"))
     }
     .environment(AppEnvironment.preview())
 }

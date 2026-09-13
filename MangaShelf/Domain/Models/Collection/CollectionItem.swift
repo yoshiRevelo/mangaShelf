@@ -14,8 +14,22 @@ final class CollectionItem {
     var cachedTitle: String
     @Attribute(.externalStorage) var coverImage: Data?
     var totalVolumes: Int?
-    var ownedVolumes: Int
-    var readingVolume: Int?
+    
+    var ownedVolumes: Int {
+        didSet {
+            if let readingVolume, readingVolume > ownedVolumes {
+                self.readingVolume = ownedVolumes
+            }
+        }
+    }
+    var readingVolume: Int? {
+        didSet {
+            if let readingVolume, readingVolume > ownedVolumes {
+                self.readingVolume = ownedVolumes
+            }
+        }
+    }
+    
     var isComplete: Bool
     var lastUpdated: Date
     
@@ -25,7 +39,7 @@ final class CollectionItem {
         self.coverImage = coverImage
         self.totalVolumes = totalVolumes
         self.ownedVolumes = ownedVolumes
-        self.readingVolume = readingVolume
+        self.readingVolume = readingVolume.map { min($0, ownedVolumes) }
         self.isComplete = isComplete
         self.lastUpdated = lastUpdated
     }

@@ -31,7 +31,7 @@ nonisolated enum AppTab: String, CaseIterable, Identifiable {
     case list
     case collection
     case search
-    case settings
+    case account
     
     var id: String { rawValue }
     
@@ -40,7 +40,7 @@ nonisolated enum AppTab: String, CaseIterable, Identifiable {
         case .list: "Mangas"
         case .collection: "My collection"
         case .search: "Search"
-        case .settings: "Settings"
+        case .account: "Account"
         }
     }
     
@@ -49,7 +49,7 @@ nonisolated enum AppTab: String, CaseIterable, Identifiable {
         case .list: "list.bullet"
         case .collection: "bookmark"
         case .search: "magnifyingglass"
-        case .settings: "gear"
+        case .account: "person.crop.circle"
         }
     }
 }

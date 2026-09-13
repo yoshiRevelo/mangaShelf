@@ -23,7 +23,7 @@ enum CollectionFilter: String, CaseIterable, Hashable, Identifiable, Equatable {
 }
 
 extension CollectionItem {
-    var isFinishedReading: Bool { readingVolume == ownedVolumes }
+    var isFinishedReading: Bool { ownedVolumes > 0 && readingVolume == ownedVolumes }
 }
 
 @Observable

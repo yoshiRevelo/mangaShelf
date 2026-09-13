@@ -31,21 +31,16 @@ struct MainTabView: View {
                 CollectionListScreen()
             }
             
-            Tab(AppTab.settings.title, systemImage: AppTab.settings.symbol, value: AppTab.settings) {
+            Tab(AppTab.account.title, systemImage: AppTab.account.symbol, value: AppTab.account) {
                 NavigationStack {
                     if !environment.sessionStore.isAuthenticated {
                         AuthScreen()
                     } else {
                         if let currentUser =  environment.sessionStore.currentUser {
-                            SettingsScreen(user: currentUser)
+                            AccountScreen(user: currentUser)
                         }
                     }
                 }
-            }
-            
-            Tab(AppTab.search.title, systemImage: AppTab.search.symbol, value: AppTab.search, role: .search) {
-                ContentUnavailableView("This feature will be available soon.", systemImage: AppTab.search.symbol)
-                    .foregroundStyle(.warning)
             }
         }
         #if os(iOS)

@@ -23,8 +23,8 @@ struct CollectionListScreen: View {
                     } description: {
                         Text("To view this section sign in first")
                     } actions: {
-                        Button("Go to settings") {
-                            router.selectedTab = .settings
+                        Button("Go to account") {
+                            router.selectedTab = .account
                         }
                         .buttonStyle(.borderedProminent)
                     }

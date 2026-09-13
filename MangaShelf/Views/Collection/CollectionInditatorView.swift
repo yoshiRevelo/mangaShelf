@@ -12,7 +12,8 @@ struct CollectionInditatorView: View {
     let ownedVolumes: Int
     
     private var readingProgress: Double {
-        ((Double(readingVolume) * 100.0) / Double(ownedVolumes)) / 100.0
+        guard ownedVolumes > 0 else { return 0 }
+        return min(Double(readingVolume) / Double(ownedVolumes), 1.0)
     }
     
     private var readingStatusColor: Color {
@@ -23,11 +24,11 @@ struct CollectionInditatorView: View {
         if ownedVolumes > 0 {
             ProgressView(value: readingProgress)
                 .tint(readingStatusColor)
+            
+            Text("Volume \(readingVolume.formatted()) of \(ownedVolumes.formatted())")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
-        
-        Text("Volume \(readingVolume.formatted()) of \(ownedVolumes.formatted())")
-            .font(.caption)
-            .foregroundStyle(.secondary)
     }
 }
 
