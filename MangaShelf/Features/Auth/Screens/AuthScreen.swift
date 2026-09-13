@@ -32,7 +32,6 @@ struct AuthScreen: View {
             .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
             #endif
         }
-        .toast($router.toast)
         .onAppear {
             viewModel.reset()
         }
