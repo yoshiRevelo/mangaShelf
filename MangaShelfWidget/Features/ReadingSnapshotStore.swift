@@ -18,7 +18,7 @@ enum ReadingSnapshotStore {
         
         let reading = items
             .filter { $0.readingVolume ?? 0 != $0.ownedVolumes }
-            .sorted { $0.lastUpdated > $1.lastUpdated }
+            .sorted { $0.lastUpdated < $1.lastUpdated }
             .prefix(2)
             .map {
                 ReadingManga(mangaID: $0.mangaID, title: $0.cachedTitle, readingVolume: $0.readingVolume ?? 0, ownedVolumes: $0.ownedVolumes)
