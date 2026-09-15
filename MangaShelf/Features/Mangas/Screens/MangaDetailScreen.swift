@@ -180,7 +180,7 @@ struct MangaDetailScreen: View {
                         Image(systemName: "star")
                             .font(.title2)
                             .symbolVariant(.fill)
-                            .foregroundStyle(index < filledStars ? .yellow : .secondary)
+                            .foregroundStyle(index < filledStars ? .yellow : .secondary.opacity(0.5))
                             .padding(.top, 8)
                             .padding(.bottom, 8)
                     }
