@@ -6,6 +6,9 @@ Cuando inicias sesión, tu colección se sincroniza con un backend, así que no 
 
 Este proyecto está dividido en 4 etapas, cada una marcada con un tag en el repo. La idea era ir subiendo de nivel poco a poco, así que cada tag construye sobre el anterior.
 
+### `Documentación`
+Este proyecto cuenta con documentación realizada en docC, la cual incluye una breve explicación en `MangaShelf`, explicación de como está estructurado el proyecto en `Arquitectura` y al final, el camino hasta llegar al proyecto final en `Memoria`.
+
 ## Los 4 tags
 
 ### `v1.0.0-basic`
