@@ -16,7 +16,7 @@ todo aprender a estructurar todo de una buena forma, separar los modelos de la l
 entender más a profundidad lo visto durante la formación, repasar y tropezarme e investigar 
 para ir aprendiendo y mejorando en cada paso del proyecto.
 
-![v1.0.0](versionBasica.png)
+![v1.0.0](basic.png)
 
 De ahí decidí subir de nivel, lo que se convirtió en el tag `v2.0.0-medium`.
 Primero los filtros completos (género, tema, demografía, autor), que me
@@ -25,7 +25,7 @@ fue cuando entendí por qué vale la pena tener un patrón de repositorio con
 su protocolo, su implementación real y un mock, en vez de meter la llamada
 de red directo en la vista.
 
-![v2.0.0](versionMedia.png)
+![v2.0.0](medium.png)
 
 Luego vino la parte que más "sube de nivel" se sintió: la nube `v3.0.0-advanced`. Pasar de
 guardar la colección en local a manejar login, tokens, y que todo viva en el
@@ -34,7 +34,7 @@ Swift, `actor`, tareas compartidas para no disparar dos refrescos de token
 al mismo tiempo, y por supuesto, que las credenciales nunca deben ir en
 `UserDefaults` sino en Keychain.
 
-![v3.0.0](versionAvanzada.png)
+![v3.0.0](advanced.png)
 
 La etapa deluxe `v4.0.0-deluxe` fue la más entretenida y la más tediosa a la vez. Entretenida
 porque ahí metí el widget: que un manga que estás leyendo aparezca en tu pantalla de inicio 
@@ -52,8 +52,7 @@ muchos topes en el camino, pero una vez que entiendes se siente una gran satisfa
 de saber cómo y por qué, en ese momento sabes que eres un poco mejor aunque siempre
 quedan mil cosas por aprender.
 
-![v4.0.0 Widget](versionDeluxe.png)
-![macOS](macOS.png)
+![v4.0.0 Widget](deluxe.png)
 
 También localicé toda la app a español e inglés con String Catalogs, lo cual
 terminó siendo más meticuloso de lo que esperaba: SwiftUI extrae

@@ -10,7 +10,7 @@ igual de bien en iPhone, iPad y Mac. Para que tuviera una buena estructura,
 armé el proyecto en capas bien separadas, cada una con una sola
 responsabilidad.
 
-![Arquitectura de la app](arquitectura.png)
+![Arquitectura de la app](architecture.png)
 
 ### App
 
