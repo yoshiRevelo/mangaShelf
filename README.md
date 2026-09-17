@@ -12,7 +12,7 @@ Este proyecto cuenta con documentación realizada en docC, la cual incluye una b
 ## Los 4 tags
 
 ### `v1.0.0-basic`
-Aquí nace la app: navegación por tabs, el listado de mangas jalando de la API, la pantalla de detalle de cada manga, y la posibilidad de armar tu colección local. También quedó lista la vista adaptativa.
+Aquí nace la app: navegación por tabs, el listado de mangas jalando de la API, la pantalla de detalle de cada manga, y la posibilidad de armar tu colección local en SwiftData. También quedó lista la vista adaptativa.
 
 ### `v2.0.0-medium`
 Se le suman los filtros completos: género, tema, demografía y autor. Básicamente pasa de "aquí está la lista de mangas" a "encuentra justo el manga que buscas".
