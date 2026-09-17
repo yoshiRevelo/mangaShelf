@@ -6,7 +6,7 @@ Cuando inicias sesión, tu colección se sincroniza con un backend, así que no 
 
 Este proyecto está dividido en 4 etapas, cada una marcada con un tag en el repo. La idea era ir subiendo de nivel poco a poco, así que cada tag construye sobre el anterior.
 
-### `Documentación`
+### Documentación
 Este proyecto cuenta con documentación realizada en docC, la cual incluye una breve explicación en `MangaShelf`, explicación de como está estructurado el proyecto en `Arquitectura` y al final, el camino hasta llegar al proyecto final en `Memoria`.
 
 ## Los 4 tags
@@ -15,14 +15,14 @@ Este proyecto cuenta con documentación realizada en docC, la cual incluye una b
 Aquí nace la app: navegación por tabs, el listado de mangas jalando de la API, la pantalla de detalle de cada manga, y la posibilidad de armar tu colección local (guardada con SwiftData, todavía sin nube). También quedó lista la vista adaptativa.
 
 ### `v2.0.0-medium`
-Se le suman los filtros completos: género, tema, demografía y autor, cada uno paginado. Básicamente pasa de "aquí está la lista de mangas" a "encuentra justo el manga que buscas".
+Se le suman los filtros completos: género, tema, demografía y autor. Básicamente pasa de "aquí está la lista de mangas" a "encuentra justo el manga que buscas".
 
 ### `v3.0.0-advanced`
-La colección deja de ser solo local: se agrega autenticación (login y registro) y una pantalla de cuenta, y ahora tu colección vive en el backend, sincronizada entre sesiones. También se pulieron los estados vacíos y de error en la lista de colección.
+La colección deja de ser solo local: se agrega autenticación y una pantalla de cuenta, y ahora tu colección vive en el backend. También se pulieron los estados vacíos y de error en la lista de colección.
 
 ### `v4.0.0-deluxe`
-La etapa final. Se agregó soporte nativo para macOS (la misma app, ventana y todo), el widget de pantalla de inicio en iOS y iPadOS con deep link directo a cada item de tu colección, localización completa en español e inglés, y bastante pulido general: ícono de la app, ratings con estrellas, mejor manejo de la sesión, y varios fixes de UI a lo largo del camino.
+La etapa final. Se agregó soporte nativo para macOS, el widget de pantalla de inicio en iOS y iPadOS con deep link directo a tu colección, localización completa en español e inglés, y bastante pulido general: ícono de la app, ratings con estrellas, mejor manejo de la sesión, y varios fixes de UI que surgieron a lo largo del camino.
 
 ## Stack
 
-SwiftUI para toda la interfaz, WidgetKit para el widget, y `async/await` para toda la parte de red contra el backend propio (autenticación, catálogo de mangas y la colección del usuario, que vive en la nube). Todo pensado para correr multiplataforma (iOS, iPadOS y macOS) desde una sola base de código.
+SwiftUI para toda la interfaz, WidgetKit para el widget, y `async/await` para toda la parte de red contra el backend propio (autenticación, catálogo de mangas y la colección del usuario, que vive en la nube). Todo pensado para correr multiplataforma (iOS, iPadOS y macOS).
